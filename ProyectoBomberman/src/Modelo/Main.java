@@ -16,10 +16,10 @@ public class Main {
         
         Scanner entradaEscaner = new Scanner (System.in);
         
-        String entradaTipo = "";
-        String entradaAlgoritmo = "";
-        String entradaHeuristica = "";
-        boolean salir = false;
+        String entradaTipo = ""; //Informada o No informada
+        String entradaAlgoritmo = ""; //Algoritmo especifico
+        String entradaHeuristica = ""; //En algunos caso la Heurística
+        boolean salir = false; //Para finalizar los while
         
         do{
             System.out.println ("Menú Principal");
