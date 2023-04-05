@@ -15,13 +15,16 @@ public class Arista {
     double peso;
     
     //**Constructor**
+    public Arista(int destino){
+        this.destino = destino;
+    }
+    
     public Arista(int destino, double peso){
         this.destino = destino;
         this.peso = peso;
     }
     
     //**Métodos**
-
     /**
      * Devuelve verdadero si dos aristas son iguales
      * @param o objeto que es una arista
@@ -32,6 +35,7 @@ public class Arista {
         Arista a = (Arista) o;
         return destino == a.destino;
     }
+    
     /**
      * Devuelve el valor del nodo destino
      * @return el valor del nodo destino
@@ -39,6 +43,4 @@ public class Arista {
     public int getDestino(){
         return destino;
     }
-    
-    
 }

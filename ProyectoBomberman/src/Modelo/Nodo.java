@@ -16,13 +16,15 @@ public class Nodo {
     String id;
     int valor;
     char estado;
+    int coordenadaX;
+    int coordenadaY;
     LinkedList<Object> listaAdyacencia;
     
     //**Constructor**
     public Nodo(String id){
         this.id = id;
-        this.valor = -1;
-        this.listaAdyacencia = new LinkedList();
+        valor = -1;
+        listaAdyacencia = new LinkedList();
     }
     
     //**Métodos**
