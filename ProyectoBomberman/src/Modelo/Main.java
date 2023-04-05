@@ -15,7 +15,12 @@ public class Main {
     public static void main(String[] args) {
       
         Carga carga = new Carga();
-        carga.presentar();
+        Grafo grafo = carga.cargarTXT();
+        for (Nodo nodo : grafo.getTablaAdyacencia()) {
+            System.out.println(nodo.toString());
+        }
+        System.out.println("numero nodos: "+grafo.numeroNodos);
+        
         /*
         Scanner entradaEscaner = new Scanner (System.in);
         
