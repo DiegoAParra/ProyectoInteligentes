@@ -13,7 +13,10 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        
+      
+        Carga carga = new Carga();
+        carga.presentar();
+        /*
         Scanner entradaEscaner = new Scanner (System.in);
         
         String entradaTipo = ""; //Informada o No informada
@@ -146,7 +149,7 @@ public class Main {
         }while(!salir);
         
         System.out.println(entradaTipo + entradaAlgoritmo + entradaHeuristica);
-        
+    */    
     }
     
 }

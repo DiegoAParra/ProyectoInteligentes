@@ -27,34 +27,28 @@ public class Carga {
         //Creamos el objeto JFileChooser
         JFileChooser fc = new JFileChooser();
         fc.showOpenDialog(fc);
-//Creamos el filtro
+        //Creamos el filtro
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.TXT", "txt");
 
-//Le indicamos el filtro
+        //Le indicamos el filtro
         fc.setFileFilter(filtro);
-
-//Si el usuario, pincha en aceptar
         //Seleccionamos el fichero
         File fichero = fc.getSelectedFile();
 
         try (FileReader fr = new FileReader(fichero)) {
-            ArrayList<Double> lista = new ArrayList<Double>();
             Scanner scanner;
             scanner = new Scanner(fr);
-            //Sacamos el tamaño de la priemra linea, al ser cuadratica, con la primera basta
-           // String linea = scanner.nextLine();
-           // int cont = linea.length();
-            
+
             while (scanner.hasNextLine()) {
-                
-                //aqui tenemos la linea del texto a leer
+
+                //aqui tenemos la linea del texto a leer NODOS
                 String linea = scanner.nextLine();
                 String[] hola = linea.split(",");
                 for (int i = 0; i < hola.length; i++) {
                     System.out.println(hola[i]);
-                    
+
                 }
-             
+
                 Scanner delimitar = new Scanner(linea);
                 delimitar.useDelimiter("\n");
 
@@ -70,17 +64,3 @@ public class Carga {
         }
     }
 }
-
-/*
-
-JFileChooser buscador = new JFileChooser();
-        buscador.showOpenDialog(buscador);
-        
-        try {
-            String direccion = buscador.getSelectedFile().getAbsolutePath();
-            System.out.println(direccion);
-        } catch (Exception e) {
-            System.out.println("ERROR");
-        }
-
- */
