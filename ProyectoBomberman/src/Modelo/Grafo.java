@@ -59,11 +59,14 @@ public class Grafo {
     /**
      * Crea un nuevo Nodo
      * @param id identificador del nodo
+     * @param estado estado del nodo C,M,R
+     * @param coordenadaX coordenada en x
+     * @param coordenadaY coordenada en y
      */
-    public void nuevoNodo(String id){
+    public void nuevoNodo(String id, String estado, int coordenadaX, int coordenadaY){
         boolean existe = numNodo(id) >= 0;
         if(!existe){
-            Nodo n = new Nodo(id);
+            Nodo n = new Nodo(id, estado, coordenadaX, coordenadaY);
             n.setValor(numeroNodos);
             tablaAdyacencia[numeroNodos++] = n;
         }

@@ -76,8 +76,23 @@ public class Carga {
                 String linea = scanner.nextLine();
                 String[] listaLinea = linea.split(",");
                 for (int i = 0; i < listaLinea.length; i++) {
-                    System.out.println(listaLinea[i]);
-                    grafo.nuevoNodo(""+coorX+","+coorY+"");
+                    grafo.nuevoNodo(coorX+","+coorY, listaLinea[i], coorX, coorY);
+                    
+                    //Conectar con los de arriba
+                    try{
+                        grafo.nuevaArista(coorX+","+coorY, coorX+","+(coorY-1));
+                        grafo.nuevaArista(coorX+","+(coorY-1), coorX+","+coorY);
+                    } catch(Exception e){
+                        //No imprimir nada, pero si salen excepciones
+                    }
+                    //Conectar con los de la izquierda
+                    try{                        
+                        grafo.nuevaArista((coorX-1)+","+coorY, coorX+","+coorY);
+                        grafo.nuevaArista(coorX+","+coorY, (coorX-1)+","+coorY);
+                    } catch(Exception e){
+                        //No imprimir nada, pero si salen excepciones
+                    }
+                    
                     coorX++;
                 }
                 coorX = 0;

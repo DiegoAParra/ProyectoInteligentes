@@ -15,12 +15,21 @@ public class Nodo {
     //**Atributos**
     String id;
     int valor;
-    char estado;
+    String estado;
     int coordenadaX;
     int coordenadaY;
     LinkedList<Object> listaAdyacencia;
     
     //**Constructor**
+    public Nodo(String id, String estado, int coordenadaX, int coordenadaY){
+        this.id = id;
+        valor = -1;
+        this.estado = estado;
+        this.coordenadaX = coordenadaX;
+        this.coordenadaY = coordenadaY;
+        listaAdyacencia = new LinkedList();
+    }
+    
     public Nodo(String id){
         this.id = id;
         valor = -1;
@@ -61,6 +70,6 @@ public class Nodo {
      */
     @Override
     public String toString(){
-        return id + "(" + valor + ")";
+        return id + "(" + estado + " - " + valor + ")";
     }
 }

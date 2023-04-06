@@ -16,10 +16,20 @@ public class Main {
       
         Carga carga = new Carga();
         Grafo grafo = carga.cargarTXT();
+        
+        //Imprimir nodoss
         for (Nodo nodo : grafo.getTablaAdyacencia()) {
             System.out.println(nodo.toString());
         }
-        System.out.println("numero nodos: "+grafo.numeroNodos);
+        System.out.println("-----------------------------------");
+        //Imprimir la tabla de adyacencia
+        for(int i = 0; i < grafo.tablaAdyacencia.length; i++){
+            for(int j = 0; j < grafo.tablaAdyacencia[i].listaAdyacencia.size(); j++){
+                Arista a = (Arista) grafo.tablaAdyacencia[i].listaAdyacencia.get(j);
+                System.out.println(grafo.tablaAdyacencia[i].toString() + " --> " + grafo.tablaAdyacencia[a.getDestino()].toString());
+            }
+        }
+        
         
         /*
         Scanner entradaEscaner = new Scanner (System.in);
