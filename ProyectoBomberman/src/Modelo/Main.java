@@ -14,26 +14,61 @@ public class Main {
 
     public static void main(String[] args) {
       
+        Scanner entradaEscaner = new Scanner (System.in);
+        
         Carga carga = new Carga();
         Grafo grafo = carga.cargarTXT();
         
-        //Imprimir nodoss
+        //Calculo n y m
+        int n = carga.calculoN();
+        int m = carga.calculoM();
+        
+        //Imprimir mapa
+        for(int i = 0 ; i < m ; i++){
+            for (Nodo nodo : grafo.getTablaAdyacencia()) {
+                if(nodo.getCoordenadaY() == i){
+                    System.out.print("| ");
+                    System.out.print(nodo.getEstado() + " ");
+                }
+            }
+            System.out.println("|" + "\n");
+        }
+        
+        /*
+        //Imprimir nodos
         for (Nodo nodo : grafo.getTablaAdyacencia()) {
             System.out.println(nodo.toString());
         }
-        System.out.println("-----------------------------------");
+        */
+        
+        //Pedimos el nodo inicio y salida del grafo
+        String entradaInicio = ""; //id del nodo inicio
+        String entradaSalida = ""; //id del nodo salida
+        
+        do{
+            System.out.println("Id del nodo inicio: ");
+            entradaInicio = entradaEscaner.nextLine(); //4,0
+        }while(grafo.numNodo(entradaInicio) < 0);
+        
+        do{
+            System.out.println("Id del nodo salida: "); //6,0
+            entradaSalida = entradaEscaner.nextLine();
+        }while(grafo.numNodo(entradaSalida) < 0);
+        
+        grafo.setInicio(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)]);
+        grafo.setSalida(grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)]);
+        
         //Imprimir la tabla de adyacencia
+        /*
         for(int i = 0; i < grafo.tablaAdyacencia.length; i++){
             for(int j = 0; j < grafo.tablaAdyacencia[i].listaAdyacencia.size(); j++){
                 Arista a = (Arista) grafo.tablaAdyacencia[i].listaAdyacencia.get(j);
                 System.out.println(grafo.tablaAdyacencia[i].toString() + " --> " + grafo.tablaAdyacencia[a.getDestino()].toString());
             }
         }
+        */
         
-        
-        /*
-        Scanner entradaEscaner = new Scanner (System.in);
-        
+        //Pedir el algoritmo
         String entradaTipo = ""; //Informada o No informada
         String entradaAlgoritmo = ""; //Algoritmo especifico
         String entradaHeuristica = ""; //En algunos caso la Heurística
@@ -58,11 +93,12 @@ public class Main {
                         
                         switch (entradaAlgoritmo) {
                             case "1":
-                                System.out.println("anchu");
+                                grafo.anchura();
+                                System.out.println("anchura************");
                                 salir = true;
                                 break;
                             case "2":
-                                System.out.println("prof");
+                                System.out.println("profundidad**********");
                                 salir = true;
                                 break;
                             case "3":
@@ -162,9 +198,5 @@ public class Main {
                     System.out.println("Por favor ingresar una opción valida del menú");
             }
         }while(!salir);
-        
-        System.out.println(entradaTipo + entradaAlgoritmo + entradaHeuristica);
-    */    
     }
-    
 }

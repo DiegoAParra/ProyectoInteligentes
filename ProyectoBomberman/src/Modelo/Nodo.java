@@ -63,6 +63,30 @@ public class Nodo {
     public String getId(){
         return id;
     }
+
+    /**
+     * Devuelve el estado del nodo
+     * @return estado C,M o R
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * Devuelve la coordenada x del nodo
+     * @return coordenada x
+     */
+    public int getCoordenadaX() {
+        return coordenadaX;
+    }
+
+    /**
+     * Devuelve la coordenada y del nodo
+     * @retur coordenada y
+     */
+    public int getCoordenadaY() {
+        return coordenadaY;
+    }
     
     /**
      * Método toString para imprimir un nodo

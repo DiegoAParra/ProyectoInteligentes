@@ -1,6 +1,7 @@
 package Modelo;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Proyecto Sistemas Inteligentes I
@@ -16,12 +17,16 @@ public class Grafo {
     int numeroNodos;
     static int maxNodos = 20;
     Nodo[] tablaAdyacencia;
+    Nodo inicio;
+    Nodo salida;
     
     //**Constructor**
     public Grafo(int mn){
         numeroNodos = 0;
         maxNodos = mn;
         tablaAdyacencia = new Nodo[mn];
+        this.inicio = null;
+        this.salida = null;
     }
     
     //**Métodos**
@@ -126,8 +131,48 @@ public class Grafo {
         if(n1 < 0 || n2 < 0){
             throw new Exception("El nodo no existe");
         }
-        Arista ab = new Arista(n2);
+        Arista ab = new Arista(n2, 10);
         tablaAdyacencia[n1].listaAdyacencia.remove(ab);
+    }
+    
+    public List<Nodo> anchura(){
+        return null;
+    }
+    
+    public List<Nodo> profundidad(Nodo nodoActual, Nodo nodoDestino, List<Nodo> listaVisitados){
+        listaVisitados.add(nodoActual); //Agregar nodo actual a la lista de visitados
+        if(listaVisitados.contains(nodoDestino)){ //Si ya encontro el destino
+            return listaVisitados;
+        }
+        if(nodoActual.listaAdyacencia.isEmpty()) { //Si no tiene hijos
+            return listaVisitados; //Retorne la lista de visitados
+        }
+        this.tablaAdyacencia[this.numNodo(nodoActual.getId())].listaAdyacencia.toArray();
+        /*
+        for (Nodo nodo : nodoActual getHijos()) { //Recorre la lista de hijos del nodo actual de izquierda a derecha
+            if(!listaVisitados.contains(nodo)) { //Si el nodo no esta en la lista de visitados
+                profundidad(nodo, listaVisitados); //Llamado recursivo
+            }
+        }
+        */
+
+        return listaVisitados;
+    }
+
+    /**
+     * Actualiza el nodo de inicio
+     * @param inicio nodo de inicio
+     */
+    public void setInicio(Nodo inicio) {
+        this.inicio = inicio;
+    }
+
+    /**
+     * Actualiza el nodo de salida
+     * @param salida
+     */
+    public void setSalida(Nodo salida) {
+        this.salida = salida;
     }
     
     /**

@@ -18,7 +18,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Carga {
 
-    public Carga() { }
+    static File fichero;
+            
+    public Carga() {
+    
+    }
 
     public Grafo cargarTXT() {
         //Creamos el objeto JFileChooser
@@ -29,7 +33,7 @@ public class Carga {
         //Le indicamos el filtro
         fc.setFileFilter(filtro);
         //Seleccionamos el fichero
-        File fichero = fc.getSelectedFile();
+        this.fichero = fc.getSelectedFile();
 
         int contador = 0; //contador para saber cuantos nodos tendra el grafo
         
@@ -43,7 +47,6 @@ public class Carga {
                 String linea = scanner.nextLine();
                 String[] listaLinea = linea.split(",");
                 for (int i = 0; i < listaLinea.length; i++) {
-                    System.out.println(listaLinea[i]);
                     contador++;
                 }
 
@@ -51,7 +54,6 @@ public class Carga {
                 delimitar.useDelimiter("\n");
                 delimitar.close();
             }
-            
         } catch (IOException e1) {
             System.out.println("El archivo no se encontró");
             return null;
@@ -108,6 +110,58 @@ public class Carga {
         } catch (NumberFormatException e2) {
             System.out.println("El archivo no puede contener letras");
             return null;
+        }
+    }
+    
+    public int calculoN(){
+        int n = 0; //contador para saber cuantos nodos tendra el grafo
+        
+        try (FileReader fr = new FileReader(fichero)) {
+            Scanner scanner;
+            scanner = new Scanner(fr);
+            
+            while (scanner.hasNextLine()) {
+
+                //aqui tenemos la linea del texto a leer Nodos
+                String linea = scanner.nextLine();
+                String[] listaLinea = linea.split(",");
+                for (int i = 0; i < listaLinea.length; i++) {
+                    n++;
+                }
+                return n;
+            }
+        return n;
+        } catch (IOException e1) {
+            System.out.println("El archivo no se encontró");
+            return 0;
+        } catch (NumberFormatException e2) {
+            System.out.println("El archivo no puede contener letras");
+            return 0;
+        }
+    }
+    
+    public int calculoM(){
+        int m = 0; //contador para saber cuantos nodos tendra el grafo
+        
+        try (FileReader fr = new FileReader(fichero)) {
+            Scanner scanner;
+            scanner = new Scanner(fr);
+            
+            while (scanner.hasNextLine()) {
+                //aqui tenemos la linea del texto a leer Nodos
+                String linea = scanner.nextLine();
+                Scanner delimitar = new Scanner(linea);
+                delimitar.useDelimiter("\n");
+                delimitar.close();
+                m++;
+            }
+        return m;
+        } catch (IOException e1) {
+            System.out.println("El archivo no se encontró");
+            return 0;
+        } catch (NumberFormatException e2) {
+            System.out.println("El archivo no puede contener letras");
+            return 0;
         }
     }
 }
