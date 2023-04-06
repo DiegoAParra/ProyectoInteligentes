@@ -139,23 +139,31 @@ public class Grafo {
         return null;
     }
     
-    public List<Nodo> profundidad(Nodo nodoActual, Nodo nodoDestino, List<Nodo> listaVisitados){
+    /**
+     * Método recursivo que devuelve la lista de nodos visitados en su orden 
+     * @param nodoActual nodo actual, al principio es el inicio
+     * @param nodoSalida nodo de salida
+     * @param listaVisitados lista de nodos visitados
+     * @return la lista de nodos visitados en su orden 
+     */
+    public List<Nodo> profundidad(Nodo nodoActual, Nodo nodoSalida, List<Nodo> listaVisitados){
         listaVisitados.add(nodoActual); //Agregar nodo actual a la lista de visitados
-        if(listaVisitados.contains(nodoDestino)){ //Si ya encontro el destino
+        if(listaVisitados.contains(nodoSalida)){ //Si ya encontro el destino
             return listaVisitados;
         }
         if(nodoActual.listaAdyacencia.isEmpty()) { //Si no tiene hijos
             return listaVisitados; //Retorne la lista de visitados
         }
-        this.tablaAdyacencia[this.numNodo(nodoActual.getId())].listaAdyacencia.toArray();
-        /*
-        for (Nodo nodo : nodoActual getHijos()) { //Recorre la lista de hijos del nodo actual de izquierda a derecha
-            if(!listaVisitados.contains(nodo)) { //Si el nodo no esta en la lista de visitados
-                profundidad(nodo, listaVisitados); //Llamado recursivo
+        LinkedList listaAdyacenciaActual = this.tablaAdyacencia[this.numNodo(nodoActual.getId())].listaAdyacencia;
+        for (Object object : listaAdyacenciaActual) {
+            Arista a = (Arista) object;
+            Nodo nodoDestino = this.tablaAdyacencia[a.destino];
+            if("C".equals(nodoDestino.getEstado())){
+                if(!listaVisitados.contains(nodoDestino)) { //Si el nodo no esta en la lista de visitados
+                    profundidad(nodoDestino, nodoSalida, listaVisitados); //Llamado recursivo
+                }
             }
         }
-        */
-
         return listaVisitados;
     }
 

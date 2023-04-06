@@ -1,5 +1,7 @@
 package Modelo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -48,12 +50,12 @@ public class Main {
         do{
             System.out.println("Id del nodo inicio: ");
             entradaInicio = entradaEscaner.nextLine(); //4,0
-        }while(grafo.numNodo(entradaInicio) < 0);
+        }while(grafo.numNodo(entradaInicio) < 0 && !"C".equals(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)].estado));
         
         do{
             System.out.println("Id del nodo salida: "); //6,0
             entradaSalida = entradaEscaner.nextLine();
-        }while(grafo.numNodo(entradaSalida) < 0);
+        }while(grafo.numNodo(entradaSalida) < 0  && !"C".equals(grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)].estado));
         
         grafo.setInicio(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)]);
         grafo.setSalida(grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)]);
@@ -98,7 +100,24 @@ public class Main {
                                 salir = true;
                                 break;
                             case "2":
-                                System.out.println("profundidad**********");
+                                System.out.println("* * * profundidad * * *");
+                                List<Nodo> listaVisitados = new ArrayList<>();
+                                listaVisitados = grafo.profundidad(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], listaVisitados);
+                                //Imprimir solución
+                                for(int i = 0 ; i < m ; i++){
+                                    for (Nodo nodo : grafo.getTablaAdyacencia()) {
+                                        if(nodo.getCoordenadaY() == i){
+                                            System.out.print("| ");
+                                            if(listaVisitados.contains(nodo)){
+                                                int posicion = listaVisitados.indexOf(nodo);;
+                                                System.out.print(posicion + " ");
+                                            } else {
+                                                System.out.print("- ");
+                                            }
+                                        }
+                                    }
+                                    System.out.println("|" + "\n");
+                                }
                                 salir = true;
                                 break;
                             case "3":
