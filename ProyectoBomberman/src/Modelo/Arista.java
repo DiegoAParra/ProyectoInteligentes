@@ -12,14 +12,14 @@ public class Arista {
     
     //**Atributos**
     int destino;
-    double peso;
+    int peso;
     
     //**Constructor**
     public Arista(int destino){
         this.destino = destino;
     }
     
-    public Arista(int destino, double peso){
+    public Arista(int destino, int peso){
         this.destino = destino;
         this.peso = peso;
     }

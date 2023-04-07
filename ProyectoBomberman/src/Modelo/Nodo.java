@@ -57,6 +57,14 @@ public class Nodo {
     }
     
     /**
+     * Devuelve el valor del nodo
+     * @return valor del nodo
+     */
+    public int getValor(){
+        return valor;
+    }
+    
+    /**
      * Devuelve el id del nodo
      * @return id del nodo
      */

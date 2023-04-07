@@ -254,7 +254,23 @@ public class Main {
                                         case "1":
                                             System.out.println("* * * A Estrella * * *");
                                             System.out.println("Heurística: Manhattan");
-                                            
+                                            List<Nodo> listaVisitadosAEM = new ArrayList<>();
+                                            listaVisitadosAEM = grafo.aEstrella(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], entradaHeuristica);
+                                            //Imprimir solución
+                                            for(int i = 0 ; i < m ; i++){
+                                                for (Nodo nodo : grafo.getTablaAdyacencia()) {
+                                                    if(nodo.getCoordenadaY() == i){
+                                                        System.out.print("| ");
+                                                        if(listaVisitadosAEM.contains(nodo)){
+                                                            int posicion = listaVisitadosAEM.indexOf(nodo);
+                                                            System.out.print(posicion + " ");
+                                                        } else {
+                                                            System.out.print("- ");
+                                                        }
+                                                    }
+                                                }
+                                                System.out.println("|" + "\n");
+                                            }
                                             salir = true;
                                             break;
                                             
