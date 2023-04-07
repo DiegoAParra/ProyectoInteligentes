@@ -98,8 +98,8 @@ public class Main {
                                 
                                 List<Nodo> listaVisitadosAnchura = new ArrayList<>();
                                 listaVisitadosAnchura = grafo.anchura(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], listaVisitadosAnchura);
-                                System.out.println("anchura************");
-                                
+                                System.out.println("* * * Anchura * * *");
+                                //Imprimir solución
                                 for(int i = 0 ; i < m ; i++){
                                     for (Nodo nodo : grafo.getTablaAdyacencia()) {
                                         if(nodo.getCoordenadaY() == i){
@@ -138,7 +138,8 @@ public class Main {
                                 salir = true;
                                 break;
                             case "3":
-                                System.out.println("cos uni");
+                                System.out.println("* * * Costo Uniforme * * *");
+                                
                                 salir = true;
                                 break;
                             default:
@@ -168,11 +169,14 @@ public class Main {
                                         case "1":
                                             System.out.println("* * * Beam Search * * *");
                                             System.out.println("Heurística: Manhattan");
+                                            
                                             salir = true;
                                             break;
                                             
                                         case "2":
-                                            System.out.println("beams - euc");
+                                            System.out.println("* * * Beam Search * * *");
+                                            System.out.println("Heurística: Euclidiana");
+                                            
                                             salir = true;
                                             break;
                                         default:
@@ -197,7 +201,9 @@ public class Main {
                                             break;
                                             
                                         case "2":
-                                            System.out.println("hillc - euc");
+                                            System.out.println("* * * Hill Climbing * * *");
+                                            System.out.println("Heurística: Euclidiana");
+                                            
                                             salir = true;
                                             break;
                                         default:
@@ -214,12 +220,16 @@ public class Main {
                                     entradaHeuristica = entradaEscaner.nextLine();
                                     switch (entradaHeuristica) {
                                         case "1":
-                                            System.out.println("aestr - manhat");
+                                            System.out.println("* * * A Estrella * * *");
+                                            System.out.println("Heurística: Manhattan");
+                                            
                                             salir = true;
                                             break;
                                             
                                         case "2":
-                                            System.out.println("aestr - euc");
+                                            System.out.println("* * * A Estrella * * *");
+                                            System.out.println("Heurística: Euclidiana");
+                                            
                                             salir = true;
                                             break;
                                         default:

@@ -201,13 +201,32 @@ public class Grafo {
         }
         return listaVisitados;
     }
+    
     public void costoUniforme(){
         
     }
+    
     public void beamSearchManhattan(){
         
     }
+    
+    public void beamSearchEuclidiana(){
+        
+    }
+    
     public void hillClimbingManhattan(Nodo nodoInicio){
+        
+    }
+    
+    public void hillClimbingEuclidiana(Nodo nodoInicio){
+        
+    }
+    
+    public void aEstrellaManhattan(Nodo nodoInicio){
+        
+    }
+    
+    public void aEstrellaEuclidiana(Nodo nodoInicio){
         
     }
 
