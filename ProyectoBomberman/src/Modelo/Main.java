@@ -100,7 +100,7 @@ public class Main {
                                 salir = true;
                                 break;
                             case "2":
-                                System.out.println("* * * profundidad * * *");
+                                System.out.println("* * * Profundidad * * *");
                                 List<Nodo> listaVisitados = new ArrayList<>();
                                 listaVisitados = grafo.profundidad(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], listaVisitados);
                                 //Imprimir solución
@@ -149,7 +149,8 @@ public class Main {
                                     entradaHeuristica = entradaEscaner.nextLine();
                                     switch (entradaHeuristica) {
                                         case "1":
-                                            System.out.println("beams - manhat");
+                                            System.out.println("* * * Beam Search * * *");
+                                            System.out.println("Heurística: Manhattan");
                                             salir = true;
                                             break;
                                             
@@ -172,7 +173,9 @@ public class Main {
                                     entradaHeuristica = entradaEscaner.nextLine();
                                     switch (entradaHeuristica) {
                                         case "1":
-                                            System.out.println("hillc - manhat");
+                                            System.out.println("* * * Hill Climbing * * *");
+                                            System.out.println("Heurística: Manhattan");
+                                            
                                             salir = true;
                                             break;
                                             

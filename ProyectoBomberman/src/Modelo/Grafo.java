@@ -166,6 +166,15 @@ public class Grafo {
         }
         return listaVisitados;
     }
+    public void costoUniforme(){
+        
+    }
+    public void beamSearchManhattan(){
+        
+    }
+    public void hillClimbingManhattan(){
+        
+    }
 
     /**
      * Actualiza el nodo de inicio
