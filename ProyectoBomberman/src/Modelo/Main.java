@@ -95,8 +95,25 @@ public class Main {
                         
                         switch (entradaAlgoritmo) {
                             case "1":
-                                grafo.anchura();
+                                
+                                List<Nodo> listaVisitadosAnchura = new ArrayList<>();
+                                listaVisitadosAnchura = grafo.anchura(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], listaVisitadosAnchura);
                                 System.out.println("anchura************");
+                                
+                                for(int i = 0 ; i < m ; i++){
+                                    for (Nodo nodo : grafo.getTablaAdyacencia()) {
+                                        if(nodo.getCoordenadaY() == i){
+                                            System.out.print("| ");
+                                            if(listaVisitadosAnchura.contains(nodo)){
+                                                int posicion = listaVisitadosAnchura.indexOf(nodo);;
+                                                System.out.print(posicion + " ");
+                                            } else {
+                                                System.out.print("- ");
+                                            }
+                                        }
+                                    }
+                                    System.out.println("|" + "\n");
+                                }
                                 salir = true;
                                 break;
                             case "2":
