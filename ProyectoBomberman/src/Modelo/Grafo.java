@@ -3,7 +3,6 @@ package Modelo;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * Proyecto Sistemas Inteligentes I Clase Grafo
@@ -33,7 +32,6 @@ public class Grafo {
     //**Métodos**
     /**
      * Devuelve la lista de adyacencia de un nodo
-     *
      * @param n la posición del nodo en la tabla de adyacencia
      * @return la lista de adyacencia de un nodo
      * @throws Exception nodo fuera de rango
@@ -48,7 +46,6 @@ public class Grafo {
     /**
      * Busca y devuelve la posición del nodo en la tabla de adyacencia, si no
      * regresa -1
-     *
      * @param id del nodo
      * @return la posición del nodo en la tabla de adyacencia, si no regresa -1
      */
@@ -67,7 +64,6 @@ public class Grafo {
 
     /**
      * Crea un nuevo Nodo
-     *
      * @param id identificador del nodo
      * @param estado estado del nodo C,M,R
      * @param coordenadaX coordenada en x
@@ -108,7 +104,6 @@ public class Grafo {
 
     /**
      * Crea una nueva arista
-     *
      * @param a id del nodo origen
      * @param b id del nodo destino
      * @throws Exception el nodo no existe
@@ -127,7 +122,6 @@ public class Grafo {
 
     /**
      * Borra una arista
-     *
      * @param a id del nodo origen
      * @param b id del nodo destino
      * @throws Exception el nodo no existe
@@ -144,7 +138,7 @@ public class Grafo {
 
     /**
      * Método que realiza búsqueda en anchura con objetivo
-     * @param nodoActual nodo desde donde empieza la busqueda
+     * @param nodoActual nodo desde donde empieza la búsqueda
      * @param nodoSalida nodo de salida
      * @param listaVisitados lista de nodos visitados
      * @return lista de nodos visitados que sera el recorrido de la búsqueda
@@ -174,12 +168,11 @@ public class Grafo {
     }
 
     /**
-     * Método recursivo que devuelve la lista de nodos visitados en su orden
-     *
+     * Método recursivo de búsqueda en profundidad con objetivo
      * @param nodoActual nodo actual, al principio es el inicio
      * @param nodoSalida nodo de salida
      * @param listaVisitados lista de nodos visitados
-     * @return la lista de nodos visitados en su orden
+     * @return lista de nodos visitados que sera el recorrido de la búsqueda
      */
     public List<Nodo> profundidad(Nodo nodoActual, Nodo nodoSalida, List<Nodo> listaVisitados) {
         listaVisitados.add(nodoActual); //Agregar nodo actual a la lista de visitados
@@ -206,33 +199,95 @@ public class Grafo {
         
     }
     
-    public void beamSearchManhattan(){
+    public void beamSearch(){
         
     }
     
-    public void beamSearchEuclidiana(){
+    /**
+     * Método que realiza hill climbing con objetivo y para ambas heurísticas
+     * @param nodoInicio nodo desde donde empieza la busqueda
+     * @param nodoSalida nodo de salida
+     * @param heuristica heurística "1":Manhattan "2":Euclidiana
+     * @return lista de nodos visitados que sera el recorrido de la búsqueda
+     */
+    public List<Nodo> hillClimbing(Nodo nodoInicio, Nodo nodoSalida, String heuristica){
+        List<Nodo> listaVisitados = new ArrayList<>();
+        List<Nodo> listaGuardados = new ArrayList<>();
+        List<Integer> listaNiveles = new ArrayList<>();
+        
+        int nivel = 0;
+        listaGuardados.add(nodoInicio);
+        listaNiveles.add(nivel);
+        while(!listaGuardados.isEmpty()){
+            //Selecciona de la lista de guardados el mejor nodo segun la heuristica
+            double mejor = Double.POSITIVE_INFINITY; //El mejor, inicialmente un número muy alto
+            Nodo nodo = null;
+            int pos = -1;
+            for (Integer n : listaNiveles) {
+                pos++;
+                if(n == nivel){
+                    //Dependiendo de la heuristica hace el calculo
+                    double valor = 0;
+                    if("1".equals(heuristica)){
+                        valor = calculoManhattan(listaGuardados.get(pos), nodoSalida);
+                    } else if("2".equals(heuristica)){
+                        valor = calculoEuclidiana(listaGuardados.get(pos), nodoSalida);
+                    }
+                    if(valor < mejor){ //Si el calculo es mejor al que tenia
+                        mejor = valor;
+                        nodo = listaGuardados.get(pos);
+                    }
+                }
+            }
+            listaNiveles.remove(listaGuardados.indexOf(nodo));
+            listaGuardados.remove(nodo);
+            listaVisitados.add(nodo); //Ingresar nodo
+            nivel++; //Aumenta el nivel
+            if (listaVisitados.contains(nodoSalida)) { //Si ya encontro el destino
+                return listaVisitados;
+            } else {
+                LinkedList listaAdyacencia = this.tablaAdyacencia[this.numNodo(nodo.getId())].listaAdyacencia;
+                for (Object object : listaAdyacencia) {
+                    Arista a = (Arista) object;
+                    Nodo nodoDestino = this.tablaAdyacencia[a.destino];
+                    if ("C".equals(nodoDestino.getEstado())) {
+                        if (!listaVisitados.contains(nodoDestino)) { //Si el nodo no esta en la lista de visitados
+                           listaGuardados.add(nodoDestino);
+                           listaNiveles.add(nivel);
+                        }
+                    }
+                }
+            }
+        }
+        return listaVisitados;
+    }
+    
+    public void aEstrella(Nodo nodoInicio){
         
     }
     
-    public void hillClimbingManhattan(Nodo nodoInicio){
-        
+    /**
+     * Devuelve el calculo de Manhattan de un nodo
+     * @param nodo nodo a calcular la heurística
+     * @param nodoSalida el nodo salida
+     * @return valor de Manhattan de un nodo
+     */
+    public double calculoManhattan(Nodo nodo, Nodo nodoSalida){
+        return Math.abs(nodoSalida.coordenadaY - nodo.coordenadaY) + Math.abs(nodoSalida.coordenadaX - nodo.coordenadaX);
     }
-    
-    public void hillClimbingEuclidiana(Nodo nodoInicio){
-        
-    }
-    
-    public void aEstrellaManhattan(Nodo nodoInicio){
-        
-    }
-    
-    public void aEstrellaEuclidiana(Nodo nodoInicio){
-        
+
+    /**
+     * Devuelve el calculo de Euclidiana de un nodo
+     * @param nodo nodo a calcular la heurística
+     * @param nodoSalida el nodo salida
+     * @return valor de Euclidiana de un nodo
+     */
+    public double calculoEuclidiana(Nodo nodo, Nodo nodoSalida){
+        return Math.sqrt(Math.pow(nodoSalida.coordenadaY - nodo.coordenadaY, 2)+(Math.pow(nodoSalida.coordenadaX - nodo.coordenadaX, 2)));
     }
 
     /**
      * Actualiza el nodo de inicio
-     *
      * @param inicio nodo de inicio
      */
     public void setInicio(Nodo inicio) {
@@ -241,7 +296,6 @@ public class Grafo {
 
     /**
      * Actualiza el nodo de salida
-     *
      * @param salida
      */
     public void setSalida(Nodo salida) {
@@ -250,7 +304,6 @@ public class Grafo {
 
     /**
      * Devuelve la tabla de adyacencia
-     *
      * @return la tabla de adyacencia
      */
     public Nodo[] getTablaAdyacencia() {

@@ -44,8 +44,8 @@ public class Nodo {
      */
     @Override
     public boolean equals(Object o){
-        Nodo nodoNos = (Nodo) o;
-        return id.equals(nodoNos.id);
+        Nodo nodoDos = (Nodo) o;
+        return id.equals(nodoDos.id);
     }
     
     /**

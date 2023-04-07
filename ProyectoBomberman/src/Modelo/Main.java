@@ -196,14 +196,46 @@ public class Main {
                                         case "1":
                                             System.out.println("* * * Hill Climbing * * *");
                                             System.out.println("Heurística: Manhattan");
-                                            
+                                            List<Nodo> listaVisitadosHCM = new ArrayList<>();
+                                            listaVisitadosHCM = grafo.hillClimbing(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], entradaHeuristica);
+                                            //Imprimir solución
+                                            for(int i = 0 ; i < m ; i++){
+                                                for (Nodo nodo : grafo.getTablaAdyacencia()) {
+                                                    if(nodo.getCoordenadaY() == i){
+                                                        System.out.print("| ");
+                                                        if(listaVisitadosHCM.contains(nodo)){
+                                                            int posicion = listaVisitadosHCM.indexOf(nodo);
+                                                            System.out.print(posicion + " ");
+                                                        } else {
+                                                            System.out.print("- ");
+                                                        }
+                                                    }
+                                                }
+                                                System.out.println("|" + "\n");
+                                            }
                                             salir = true;
                                             break;
                                             
                                         case "2":
                                             System.out.println("* * * Hill Climbing * * *");
                                             System.out.println("Heurística: Euclidiana");
-                                            
+                                            List<Nodo> listaVisitadosHCE = new ArrayList<>();
+                                            listaVisitadosHCE = grafo.hillClimbing(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], entradaHeuristica);
+                                            //Imprimir solución
+                                            for(int i = 0 ; i < m ; i++){
+                                                for (Nodo nodo : grafo.getTablaAdyacencia()) {
+                                                    if(nodo.getCoordenadaY() == i){
+                                                        System.out.print("| ");
+                                                        if(listaVisitadosHCE.contains(nodo)){
+                                                            int posicion = listaVisitadosHCE.indexOf(nodo);
+                                                            System.out.print(posicion + " ");
+                                                        } else {
+                                                            System.out.print("- ");
+                                                        }
+                                                    }
+                                                }
+                                                System.out.println("|" + "\n");
+                                            }
                                             salir = true;
                                             break;
                                         default:
