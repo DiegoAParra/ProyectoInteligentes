@@ -172,7 +172,7 @@ public class Grafo {
     public void beamSearchManhattan(){
         
     }
-    public void hillClimbingManhattan(){
+    public void hillClimbingManhattan(Nodo nodoInicio){
         
     }
 
