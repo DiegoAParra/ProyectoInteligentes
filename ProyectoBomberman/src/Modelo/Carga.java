@@ -3,7 +3,6 @@ package Modelo;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -114,8 +113,7 @@ public class Carga {
     }
     
     public int calculoN(){
-        int n = 0; //contador para saber cuantos nodos tendra el grafo
-        
+        int n = 0; //contador para saber cuantos nodos en n tendra el grafo
         try (FileReader fr = new FileReader(fichero)) {
             Scanner scanner;
             scanner = new Scanner(fr);
@@ -141,8 +139,7 @@ public class Carga {
     }
     
     public int calculoM(){
-        int m = 0; //contador para saber cuantos nodos tendra el grafo
-        
+        int m = 0; //contador para saber cuantos nodos en m tendra el grafo
         try (FileReader fr = new FileReader(fichero)) {
             Scanner scanner;
             scanner = new Scanner(fr);
