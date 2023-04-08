@@ -209,20 +209,56 @@ public class Grafo {
      * @param nodoSalida nodo de salida
      * @return lista de nodos visitados que sera el recorrido de la búsqueda
      */
-    public List<Nodo> costoUniforme(Nodo nodoInicio, Nodo nodoSalida) {
-        List<Nodo> listaVisitados = new ArrayList<>();
+    public List<Nodo> costoUniforme(Nodo nodoInicio, Nodo nodoSalida, List<Nodo> listaCerrada) {
         List<int[]> colaPrioridad = new ArrayList<>();
+        List<Nodo> listaAbierta = new ArrayList<>();
 
         //JUANITO
-        listaVisitados.add(nodoInicio);
+        
+        /*Se ingresa el nodo a evaluar en la lista abierta*/
+        /*Se elimina de la lista abierta, se expande y se mete en la lista cerrada*/
+        /*En la lista abierta ahora estan los nodos expandidos del nodo que se eliminó, con los pesos*/
+        /*Se ordenan y se evaluan, ejemplo, en la lista abierta hay un nodo C con peso 6 pero que viene de S, 
+        Estamos expandiendo el nodo B, que tiene de adyacente al nodo c y que el peso de C viniendo de B es 5, entonces se deja el 
+        C que viene de B y se elimina el de S, y se mete el B en la lista cerrada.*/
+        /*La lista cerrada hace las veces de el camino que va siguiendo el algoritmo*/
+        listaAbierta.add(nodoInicio);
+        Nodo nodoTemp = listaAbierta.remove(0);
+        listaCerrada.add(nodoTemp);
+        
+        //cambiar condicion while
+        while (!colaPrioridad.isEmpty()) {
+            if (listaCerrada.contains(nodoSalida)) { //Si ya encontro el destino
+                return listaCerrada;
+            } else {           
+                /*Se expanden los adyacentes y se meten en la lista abierta para ser evaluados, falta la condicion 
+                que expliqué arriba, la de evaluar si hay una misma adyacencia pero con diferente peso*/
+            }  
+                LinkedList listaAdyacencia = this.tablaAdyacencia[this.numNodo(nodoTemp.getId())].listaAdyacencia;
+                for (Object object : listaAdyacencia) {
+                    Arista a = (Arista) object;
+                    Nodo nodoDestino = this.tablaAdyacencia[a.destino];
+                    if ("C".equals(nodoDestino.getEstado())) {
+                        if (!listaCerrada.contains(nodoDestino)) { //Si el nodo no esta en la lista de visitados
+                                listaAbierta.add(nodoDestino);
+                        }
+                    }
 
-        while (!colaPrioridad.isEmpty()) { //Mientras la cola tenga algo
-            if (listaVisitados.contains(nodoSalida)) { //Si ya encontro el destino
-                return listaVisitados;
+                }
+                /*
+                //Se debe ordenar la lista
+                //listaAbierta = this.ordenarListaAbierta(listaAbierta);
+                List<Nodo> agendaTemp2 = new ArrayList<>();
+                for (Nodo n : agenda) {
+                    if (agenda.indexOf(n) < beta) {
+                        listaVisitados.add(n);
+                        agendaTemp2.add(n);
+                    }
+                }
+                agenda = agendaTemp2;
             }
+                */
         }
-
-        return listaVisitados;
     }
 
     /**
