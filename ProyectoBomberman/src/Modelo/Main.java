@@ -277,7 +277,23 @@ public class Main {
                                         case "2":
                                             System.out.println("* * * A Estrella * * *");
                                             System.out.println("Heurística: Euclidiana");
-                                            
+                                            List<Nodo> listaVisitadosAEE = new ArrayList<>();
+                                            listaVisitadosAEE = grafo.aEstrella(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], entradaHeuristica);
+                                            //Imprimir solución
+                                            for(int i = 0 ; i < m ; i++){
+                                                for (Nodo nodo : grafo.getTablaAdyacencia()) {
+                                                    if(nodo.getCoordenadaY() == i){
+                                                        System.out.print("| ");
+                                                        if(listaVisitadosAEE.contains(nodo)){
+                                                            int posicion = listaVisitadosAEE.indexOf(nodo);
+                                                            System.out.print(posicion + " ");
+                                                        } else {
+                                                            System.out.print("- ");
+                                                        }
+                                                    }
+                                                }
+                                                System.out.println("|" + "\n");
+                                            }
                                             salir = true;
                                             break;
                                         default:

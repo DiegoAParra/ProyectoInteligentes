@@ -182,13 +182,13 @@ public class Grafo {
      * @return lista de nodos visitados que sera el recorrido de la búsqueda
      */
     public List<Nodo> profundidad(Nodo nodoActual, Nodo nodoSalida, List<Nodo> listaVisitados) {
-        listaVisitados.add(nodoActual); //Agregar nodo actual a la lista de visitados
         if (listaVisitados.contains(nodoSalida)) { //Si ya encontro el destino
             return listaVisitados;
         }
         if (nodoActual.listaAdyacencia.isEmpty()) { //Si no tiene hijos
             return listaVisitados; //Retorne la lista de visitados
         }
+        listaVisitados.add(nodoActual); //Agregar nodo actual a la lista de visitados
         LinkedList listaAdyacenciaActual = this.tablaAdyacencia[this.numNodo(nodoActual.getId())].listaAdyacencia;
         for (Object object : listaAdyacenciaActual) {
             Arista a = (Arista) object;
@@ -212,7 +212,6 @@ public class Grafo {
 
     /**
      * Método que realiza hill climbing con objetivo y para ambas heurísticas
-     *
      * @param nodoInicio nodo desde donde empieza la busqueda
      * @param nodoSalida nodo de salida
      * @param heuristica heurística "1":Manhattan "2":Euclidiana
@@ -294,6 +293,13 @@ public class Grafo {
         return listaVisitados;
     }
 
+    /**
+     * Método que realiza a estrella con objetivo y para ambas heurísticas
+     * @param nodoInicio nodo desde donde empieza la busqueda
+     * @param nodoSalida nodo de salida
+     * @param heuristica heurística "1":Manhattan "2":Euclidiana
+     * @return lista de nodos visitados que sera el recorrido de la búsqueda
+     */
     public List<Nodo> aEstrella(Nodo nodoInicio, Nodo nodoSalida, String heuristica) {
         List<Nodo> listaVisitados = new ArrayList<>();
         List<int[]> listaAbiertos = new ArrayList<>();
@@ -306,13 +312,6 @@ public class Grafo {
                 return listaVisitados;
             } else {
                 listaVisitados.add(nodo); //Agregar a la lista de visitados
-                
-                System.out.println("Lista visitados:");
-                for (Nodo listaV : listaVisitados) {
-                    System.out.println(listaV.toString());
-                }
-                
-                
                 LinkedList listaAdyacencia = this.tablaAdyacencia[this.numNodo(nodo.getId())].listaAdyacencia;
                 for (Object object : listaAdyacencia) {
                     Arista a = (Arista) object;
@@ -320,33 +319,19 @@ public class Grafo {
                     if ("C".equals(nodoDestino.getEstado())) {
                         if (!listaVisitados.contains(nodoDestino)) { //Si el nodo no esta en la lista de visitados
                             int pesoNuevo = pesoAnterior + a.peso;
-                            int funcionCosto = (int) (pesoNuevo + calculoManhattan(nodo, nodoSalida)*10);
+                            //Dependiendo de la heuristica hace el calculo de la funcion de costo
+                            int funcionCosto = 0;
+                            if ("1".equals(heuristica)) {
+                                funcionCosto = (int) (pesoNuevo + calculoManhattan(nodoDestino, nodoSalida)*10);
+                            } else if ("2".equals(heuristica)) {
+                                funcionCosto = (int) (pesoNuevo + calculoEuclidiana(nodoDestino, nodoSalida)*10);
+                            }
                             int[] infoAbierto = {nodoDestino.getValor(), nodo.getValor(), pesoNuevo, funcionCosto};
                             listaAbiertos.add(infoAbierto);
                         }
                     }
                 }
-                
-                System.out.println("Lista abiertos:");
-                for (int[] listaA : listaAbiertos) {
-                    System.out.print("[ ");
-                    for (int i : listaA) {
-                        System.out.print(i + ", ");
-                    }
-                    System.out.print("]\n");
-                }
-                
                 listaAbiertos = ordenarListaAbierta(listaAbiertos); //Ordenamos la lista
-                
-                System.out.println("Lista abiertos ordenada:");
-                for (int[] listaA : listaAbiertos) {
-                    System.out.print("[ ");
-                    for (int i : listaA) {
-                        System.out.print(i + ", ");
-                    }
-                    System.out.print("]\n");
-                }
-                
                 nodo = this.tablaAdyacencia[listaAbiertos.get(0)[0]]; //Selecciona el primero de la lista
                 pesoAnterior = listaAbiertos.get(0)[2]; //Guarda el peso anterior
                 listaAbiertos.remove(0);
