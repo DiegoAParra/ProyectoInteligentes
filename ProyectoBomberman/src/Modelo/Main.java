@@ -21,7 +21,6 @@ public class Main {
         Grafo grafo = carga.cargarTXT();
 
         //Calculo n y m
-        int n = carga.calculoN();
         int m = carga.calculoM();
 
         //Imprimir mapa

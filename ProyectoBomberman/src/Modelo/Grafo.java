@@ -32,6 +32,7 @@ public class Grafo {
     //**Métodos**
     /**
      * Devuelve la lista de adyacencia de un nodo
+     *
      * @param n la posición del nodo en la tabla de adyacencia
      * @return la lista de adyacencia de un nodo
      * @throws Exception nodo fuera de rango
@@ -46,6 +47,7 @@ public class Grafo {
     /**
      * Busca y devuelve la posición del nodo en la tabla de adyacencia, si no
      * regresa -1
+     *
      * @param id del nodo
      * @return la posición del nodo en la tabla de adyacencia, si no regresa -1
      */
@@ -64,6 +66,7 @@ public class Grafo {
 
     /**
      * Crea un nuevo Nodo
+     *
      * @param id identificador del nodo
      * @param estado estado del nodo C,M,R
      * @param coordenadaX coordenada en x
@@ -104,6 +107,7 @@ public class Grafo {
 
     /**
      * Crea una nueva arista
+     *
      * @param a id del nodo origen
      * @param b id del nodo destino
      * @throws Exception el nodo no existe
@@ -122,6 +126,7 @@ public class Grafo {
 
     /**
      * Borra una arista
+     *
      * @param a id del nodo origen
      * @param b id del nodo destino
      * @throws Exception el nodo no existe
@@ -138,6 +143,7 @@ public class Grafo {
 
     /**
      * Método que realiza búsqueda en anchura con objetivo
+     *
      * @param nodoActual nodo desde donde empieza la búsqueda
      * @param nodoSalida nodo de salida
      * @return lista de nodos visitados que sera el recorrido de la búsqueda
@@ -169,6 +175,7 @@ public class Grafo {
 
     /**
      * Método recursivo de búsqueda en profundidad con objetivo
+     *
      * @param nodoActual nodo actual, al principio es el inicio
      * @param nodoSalida nodo de salida
      * @param listaVisitados lista de nodos visitados
@@ -197,39 +204,80 @@ public class Grafo {
 
     /**
      * Método que realiza costo uniforme con objetivo
+     *
      * @param nodoInicio nodo desde donde empieza la busqueda
      * @param nodoSalida nodo de salida
      * @return lista de nodos visitados que sera el recorrido de la búsqueda
      */
-    public List<Nodo>  costoUniforme(Nodo nodoInicio, Nodo nodoSalida) {
+    public List<Nodo> costoUniforme(Nodo nodoInicio, Nodo nodoSalida) {
         List<Nodo> listaVisitados = new ArrayList<>();
         List<int[]> colaPrioridad = new ArrayList<>();
-        
+
+        //JUANITO
         listaVisitados.add(nodoInicio);
-        
+
         while (!colaPrioridad.isEmpty()) { //Mientras la cola tenga algo
             if (listaVisitados.contains(nodoSalida)) { //Si ya encontro el destino
                 return listaVisitados;
             }
         }
-        
+
         return listaVisitados;
     }
 
     /**
      * Método que realiza beam search con objetivo y para ambas heurísticas
+     *
      * @param nodoInicio nodo desde donde empieza la busqueda
      * @param nodoSalida nodo de salida
      * @param heuristica heurística "1":Manhattan "2":Euclidiana
      * @return lista de nodos visitados que sera el recorrido de la búsqueda
      */
-    public List<Nodo>  beamSearch(Nodo nodoInicio, Nodo nodoSalida, String heuristica) {
+    public List<Nodo> beamSearch(Nodo nodoInicio, Nodo nodoSalida, String heuristica) {
         List<Nodo> listaVisitados = new ArrayList<>();
+        List<Nodo> agenda = new ArrayList<>();
+
+        listaVisitados.add(nodoInicio);
+        agenda.add(nodoInicio);
+        int beta = 4;
+
+        while (!agenda.isEmpty()) {
+            if (listaVisitados.contains(nodoSalida)) { //Si ya encontro el destino
+                return listaVisitados;
+            } else {
+                List<Nodo> agendaTemp = new ArrayList<>();
+                for (Nodo nodoAgenda : agenda) {
+                    LinkedList listaAdyacencia = this.tablaAdyacencia[this.numNodo(nodoAgenda.getId())].listaAdyacencia;
+                    for (Object object : listaAdyacencia) {
+                        Arista a = (Arista) object;
+                        Nodo nodoDestino = this.tablaAdyacencia[a.destino];
+                        if ("C".equals(nodoDestino.getEstado())) {
+                            if (!listaVisitados.contains(nodoDestino)) { //Si el nodo no esta en la lista de visitados
+                                if (!agendaTemp.contains(nodoDestino)) {
+                                    agendaTemp.add(nodoDestino);
+                                }
+                            }
+                        }
+                    }
+                }
+                agenda = agendaTemp;
+                agenda = this.ordenarLista(agenda, heuristica);
+                List<Nodo> agendaTemp2 = new ArrayList<>();
+                for (Nodo n : agenda) {
+                    if (agenda.indexOf(n) < beta) {
+                        listaVisitados.add(n);
+                        agendaTemp2.add(n);
+                    }
+                }
+                agenda = agendaTemp2;
+            }
+        }
         return listaVisitados;
     }
 
     /**
      * Método que realiza hill climbing con objetivo y para ambas heurísticas
+     *
      * @param nodoInicio nodo desde donde empieza la busqueda
      * @param nodoSalida nodo de salida
      * @param heuristica heurística "1":Manhattan "2":Euclidiana
@@ -313,6 +361,7 @@ public class Grafo {
 
     /**
      * Método que realiza a estrella con objetivo y para ambas heurísticas
+     *
      * @param nodoInicio nodo desde donde empieza la busqueda
      * @param nodoSalida nodo de salida
      * @param heuristica heurística "1":Manhattan "2":Euclidiana
@@ -340,9 +389,9 @@ public class Grafo {
                             //Dependiendo de la heuristica hace el calculo de la funcion de costo
                             int funcionCosto = 0;
                             if ("1".equals(heuristica)) {
-                                funcionCosto = (int) (pesoNuevo + calculoManhattan(nodoDestino, nodoSalida)*10);
+                                funcionCosto = (int) (pesoNuevo + calculoManhattan(nodoDestino, nodoSalida) * 10);
                             } else if ("2".equals(heuristica)) {
-                                funcionCosto = (int) (pesoNuevo + calculoEuclidiana(nodoDestino, nodoSalida)*10);
+                                funcionCosto = (int) (pesoNuevo + calculoEuclidiana(nodoDestino, nodoSalida) * 10);
                             }
                             int[] infoAbierto = {nodoDestino.getValor(), nodo.getValor(), pesoNuevo, funcionCosto};
                             listaAbiertos.add(infoAbierto);
@@ -358,17 +407,39 @@ public class Grafo {
         return listaVisitados;
     }
 
+    public List<Nodo> ordenarLista(List<Nodo> lista, String heuristica) {
+        for (int i = lista.size() - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if ("1".equals(heuristica)) {
+                    if (this.calculoManhattan(lista.get(j), this.salida) > this.calculoManhattan(lista.get(j + 1), this.salida)) {
+                        Nodo nodoTemp = lista.get(j + 1);
+                        lista.set(j + 1, lista.get(j));
+                        lista.set(j, nodoTemp);
+                    }
+                } else if ("2".equals(heuristica)) {
+                    if (this.calculoEuclidiana(lista.get(j), this.salida) > this.calculoEuclidiana(lista.get(j + 1), this.salida)) {
+                        Nodo nodoTemp = lista.get(j + 1);
+                        lista.set(j + 1, lista.get(j));
+                        lista.set(j, nodoTemp);
+                    }
+                }
+            }
+        }
+        return lista;
+    }
+
     /**
      * Algoritmo de ordenamiento burbuja
+     *
      * @param lista lista que se desea ordenar
      * @return la lista ordenada
      */
     public List<int[]> ordenarListaAbierta(List<int[]> lista) {
         for (int i = lista.size() - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
-                if (lista.get(j)[3] > lista.get(j+1)[3]) {
-                    int[] info = lista.get(j+1);
-                    lista.set(j+1, lista.get(j));
+                if (lista.get(j)[3] > lista.get(j + 1)[3]) {
+                    int[] info = lista.get(j + 1);
+                    lista.set(j + 1, lista.get(j));
                     lista.set(j, info);
                 }
             }
@@ -400,6 +471,7 @@ public class Grafo {
 
     /**
      * Método que imprime la solución
+     *
      * @param lista lista de nodos visitados
      * @param m tamaño m del grafo
      */
@@ -419,9 +491,10 @@ public class Grafo {
             System.out.println("|" + "\n");
         }
     }
-    
+
     /**
      * Actualiza el nodo de inicio
+     *
      * @param inicio nodo de inicio
      */
     public void setInicio(Nodo inicio) {
@@ -430,6 +503,7 @@ public class Grafo {
 
     /**
      * Actualiza el nodo de salida
+     *
      * @param salida
      */
     public void setSalida(Nodo salida) {
@@ -438,6 +512,7 @@ public class Grafo {
 
     /**
      * Devuelve la tabla de adyacencia
+     *
      * @return la tabla de adyacencia
      */
     public Nodo[] getTablaAdyacencia() {
