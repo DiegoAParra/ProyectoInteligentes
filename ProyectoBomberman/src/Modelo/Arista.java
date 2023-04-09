@@ -43,4 +43,12 @@ public class Arista {
     public int getDestino(){
         return destino;
     }
+    
+    /**
+     * Devuelve el peso del nodo destino
+     * @return el peso del nodo destino
+     */
+    public int getPeso(){
+        return peso;
+    }
 }

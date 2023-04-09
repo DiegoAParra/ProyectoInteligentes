@@ -209,56 +209,80 @@ public class Grafo {
      * @param nodoSalida nodo de salida
      * @return lista de nodos visitados que sera el recorrido de la búsqueda
      */
-    public List<Nodo> costoUniforme(Nodo nodoInicio, Nodo nodoSalida, List<Nodo> listaCerrada) {
-        List<int[]> colaPrioridad = new ArrayList<>();
-        List<Nodo> listaAbierta = new ArrayList<>();
-
-        //JUANITO
+    public List<Nodo> costoUniforme(Nodo nodoInicio, Nodo nodoSalida) {
+        List<Nodo> listaVisitados = new ArrayList<>();
+        List<int[]> listaAbierta = new ArrayList<>(); //En la primera el valor del nodo, y en la segunda el peso
+        List<int[]> listaEvaluacion = new ArrayList<>(); //En la primera el valor del nodo, en la segunda el peso, el valor del nodo padre
         
-        /*Se ingresa el nodo a evaluar en la lista abierta*/
-        /*Se elimina de la lista abierta, se expande y se mete en la lista cerrada*/
-        /*En la lista abierta ahora estan los nodos expandidos del nodo que se eliminó, con los pesos*/
-        /*Se ordenan y se evaluan, ejemplo, en la lista abierta hay un nodo C con peso 6 pero que viene de S, 
-        Estamos expandiendo el nodo B, que tiene de adyacente al nodo c y que el peso de C viniendo de B es 5, entonces se deja el 
-        C que viene de B y se elimina el de S, y se mete el B en la lista cerrada.*/
-        /*La lista cerrada hace las veces de el camino que va siguiendo el algoritmo*/
-        listaAbierta.add(nodoInicio);
-        Nodo nodoTemp = listaAbierta.remove(0);
-        listaCerrada.add(nodoTemp);
+        int[] infoAbiertoInicio = {nodoInicio.getValor(), 0};
+        listaAbierta.add(infoAbiertoInicio);
+        int[] infoEvaluacionInicio = {nodoInicio.getValor(), 0, -1};
+        listaEvaluacion.add(infoEvaluacionInicio);
         
-        //cambiar condicion while
-        while (!colaPrioridad.isEmpty()) {
-            if (listaCerrada.contains(nodoSalida)) { //Si ya encontro el destino
-                return listaCerrada;
-            } else {           
-                /*Se expanden los adyacentes y se meten en la lista abierta para ser evaluados, falta la condicion 
-                que expliqué arriba, la de evaluar si hay una misma adyacencia pero con diferente peso*/
-            }  
-                LinkedList listaAdyacencia = this.tablaAdyacencia[this.numNodo(nodoTemp.getId())].listaAdyacencia;
+        while(!listaAbierta.isEmpty()){
+            if (listaVisitados.contains(nodoSalida)) { //Si ya encontro el destino
+                return listaVisitados;
+            } else {
+                listaAbierta = this.ordenarListaAbiertaCostoUniforme(listaAbierta);
+                
+                Nodo nodo = this.tablaAdyacencia[listaAbierta.get(0)[0]];
+                int peso = listaAbierta.get(0)[1];
+                
+                listaAbierta.remove(0);
+                listaVisitados.add(nodo);
+                
+                LinkedList listaAdyacencia = this.tablaAdyacencia[this.numNodo(nodo.getId())].listaAdyacencia;
                 for (Object object : listaAdyacencia) {
                     Arista a = (Arista) object;
-                    Nodo nodoDestino = this.tablaAdyacencia[a.destino];
+                    Nodo nodoDestino = this.tablaAdyacencia[a.getDestino()];
                     if ("C".equals(nodoDestino.getEstado())) {
-                        if (!listaCerrada.contains(nodoDestino)) { //Si el nodo no esta en la lista de visitados
-                                listaAbierta.add(nodoDestino);
+                        if (!listaVisitados.contains(nodoDestino)) { //Si el nodo no esta en la lista de visitados
+                            int pos = -1;
+                            List<int[]> listaEvaluacionTemp = new ArrayList<>();
+                            for (int[] is : listaEvaluacion) {
+                                listaEvaluacionTemp.add(is);
+                            }
+                            for (int[] info : listaEvaluacionTemp) {
+                                pos++;
+                                if(nodoDestino.getValor() == info[0]){
+                                    if(a.getPeso() + peso <= info[1]){
+                                        int[] nuevaInfo = {nodoDestino.getValor(), a.getPeso() + peso, nodo.getValor()};
+                                        listaEvaluacion.set(pos, nuevaInfo);
+                                        
+                                        int pos2 = -1;
+                                        int[] infoAbierto = {nodoDestino.getValor(), a.getPeso() + peso};
+                                        List<int[]> listaAbiertoTemp = new ArrayList<>();
+                                        for (int[] is : listaAbierta) {
+                                            listaAbiertoTemp.add(is);
+                                        }
+                                        for (int[] i : listaAbiertoTemp) {
+                                            pos2++;
+                                            if(i[0] == infoAbierto[0]){
+                                                listaAbierta.set(pos2, infoAbierto);
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    boolean bandera = true;
+                                    int[] infoAbierto = {nodoDestino.getValor(), a.getPeso() + peso};
+                                    for (int[] i : listaAbierta) {
+                                        if(i[0] == nodoDestino.getValor()){
+                                            bandera = false;
+                                        }
+                                    }
+                                    if(bandera){
+                                        listaAbierta.add(infoAbierto);
+                                        int[] infoEvaluacion = {nodoDestino.getValor(), a.getPeso() + peso, nodo.getValor()};
+                                        listaEvaluacion.add(infoEvaluacion);
+                                    }
+                                }
+                            }
                         }
                     }
-
                 }
-                /*
-                //Se debe ordenar la lista
-                //listaAbierta = this.ordenarListaAbierta(listaAbierta);
-                List<Nodo> agendaTemp2 = new ArrayList<>();
-                for (Nodo n : agenda) {
-                    if (agenda.indexOf(n) < beta) {
-                        listaVisitados.add(n);
-                        agendaTemp2.add(n);
-                    }
-                }
-                agenda = agendaTemp2;
             }
-                */
         }
+        return  listaVisitados;
     }
 
     /**
@@ -474,6 +498,25 @@ public class Grafo {
         for (int i = lista.size() - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
                 if (lista.get(j)[3] > lista.get(j + 1)[3]) {
+                    int[] info = lista.get(j + 1);
+                    lista.set(j + 1, lista.get(j));
+                    lista.set(j, info);
+                }
+            }
+        }
+        return lista;
+    }
+    
+    /**
+     * Algoritmo de ordenamiento burbuja para el algoritmo de costo uniforme
+     *
+     * @param lista lista que se desea ordenar
+     * @return la lista ordenada
+     */
+    public List<int[]> ordenarListaAbiertaCostoUniforme(List<int[]> lista) {
+        for (int i = lista.size() - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (lista.get(j)[1] > lista.get(j + 1)[1]) {
                     int[] info = lista.get(j + 1);
                     lista.set(j + 1, lista.get(j));
                     lista.set(j, info);
