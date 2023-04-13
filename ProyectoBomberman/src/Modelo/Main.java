@@ -33,6 +33,21 @@ public class Main {
             }
             System.out.println("|" + "\n");
         }
+        
+        
+        System.out.println("");
+        System.out.println("----------------------------");
+        System.out.println("");
+        String[] abece= {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+        for (int i = 0; i < m; i++) {
+            for (Nodo nodo : grafo.getTablaAdyacencia()) {
+                if (nodo.getCoordenadaY() == i) {
+                    System.out.print("| ");
+                    System.out.print(nodo.getLetra()+ " ");
+                }
+            }
+            System.out.println("|" + "\n");
+        }
 
         /*
         //Imprimir nodos
@@ -95,6 +110,7 @@ public class Main {
                                 List<Nodo> listaVisitadosA = new ArrayList<>();
                                 listaVisitadosA = grafo.anchura(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)]);
                                 grafo.imprimirListaVisitados(listaVisitadosA, m);
+                                grafo.imprimirExamen(listaVisitadosA);
                                 salir = true;
                                 break;
                             case "2":
@@ -102,6 +118,7 @@ public class Main {
                                 List<Nodo> listaVisitadosP = new ArrayList<>();
                                 listaVisitadosP = grafo.profundidad(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], listaVisitadosP);
                                 grafo.imprimirListaVisitados(listaVisitadosP, m);
+                                grafo.imprimirExamen(listaVisitadosP);
                                 salir = true;
                                 break;
                             case "3":
@@ -109,6 +126,7 @@ public class Main {
                                 List<Nodo> listaVisitadosCU = new ArrayList<>();
                                 listaVisitadosCU = grafo.costoUniforme(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)]);
                                 grafo.imprimirListaVisitados(listaVisitadosCU, m);
+                                grafo.imprimirExamen(listaVisitadosCU);
                                 salir = true;
                                 break;
                             default:
@@ -141,6 +159,7 @@ public class Main {
                                             List<Nodo> listaVisitadosBSM = new ArrayList<>();
                                             listaVisitadosBSM = grafo.beamSearch(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], entradaHeuristica);
                                             grafo.imprimirListaVisitados(listaVisitadosBSM, m);
+                                            grafo.imprimirExamen(listaVisitadosBSM);
                                             salir = true;
                                             break;
 
@@ -150,6 +169,7 @@ public class Main {
                                             List<Nodo> listaVisitadosBSE = new ArrayList<>();
                                             listaVisitadosBSE = grafo.beamSearch(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], entradaHeuristica);
                                             grafo.imprimirListaVisitados(listaVisitadosBSE, m);
+                                            grafo.imprimirExamen(listaVisitadosBSE);
                                             salir = true;
                                             break;
                                         default:
@@ -172,6 +192,7 @@ public class Main {
                                             List<Nodo> listaVisitadosHCM = new ArrayList<>();
                                             listaVisitadosHCM = grafo.hillClimbing(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], entradaHeuristica);
                                             grafo.imprimirListaVisitados(listaVisitadosHCM, m);
+                                            grafo.imprimirExamen(listaVisitadosHCM);
                                             salir = true;
                                             break;
 
@@ -181,6 +202,7 @@ public class Main {
                                             List<Nodo> listaVisitadosHCE = new ArrayList<>();
                                             listaVisitadosHCE = grafo.hillClimbing(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], entradaHeuristica);
                                             grafo.imprimirListaVisitados(listaVisitadosHCE, m);
+                                            grafo.imprimirExamen(listaVisitadosHCE);
                                             salir = true;
                                             break;
                                         default:
@@ -202,6 +224,7 @@ public class Main {
                                             List<Nodo> listaVisitadosAEM = new ArrayList<>();
                                             listaVisitadosAEM = grafo.aEstrella(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], entradaHeuristica);
                                             grafo.imprimirListaVisitados(listaVisitadosAEM, m);
+                                            grafo.imprimirExamen(listaVisitadosAEM);
                                             salir = true;
                                             break;
 
@@ -211,6 +234,7 @@ public class Main {
                                             List<Nodo> listaVisitadosAEE = new ArrayList<>();
                                             listaVisitadosAEE = grafo.aEstrella(grafo.tablaAdyacencia[grafo.numNodo(entradaInicio)], grafo.tablaAdyacencia[grafo.numNodo(entradaSalida)], entradaHeuristica);
                                             grafo.imprimirListaVisitados(listaVisitadosAEE, m);
+                                            grafo.imprimirExamen(listaVisitadosAEE);
                                             salir = true;
                                             break;
                                         default:

@@ -15,6 +15,7 @@ public class Nodo {
     //**Atributos**
     String id;
     int valor;
+    String letra;
     String estado;
     int coordenadaX;
     int coordenadaY;
@@ -24,6 +25,7 @@ public class Nodo {
     public Nodo(String id, String estado, int coordenadaX, int coordenadaY){
         this.id = id;
         valor = -1;
+        letra = "";
         this.estado = estado;
         this.coordenadaX = coordenadaX;
         this.coordenadaY = coordenadaY;
@@ -33,6 +35,7 @@ public class Nodo {
     public Nodo(String id){
         this.id = id;
         valor = -1;
+        letra = "";
         listaAdyacencia = new LinkedList();
     }
     
@@ -54,6 +57,14 @@ public class Nodo {
      */
     public void setValor(int valor){
         this.valor = valor;
+    }
+    
+    public void setLetra(String letra){
+        this.letra = letra;
+    }
+    
+    public String getLetra(){
+        return letra;
     }
     
     /**

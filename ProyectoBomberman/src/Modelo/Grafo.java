@@ -78,6 +78,12 @@ public class Grafo {
             Nodo n = new Nodo(id, estado, coordenadaX, coordenadaY);
             n.setValor(numeroNodos);
             tablaAdyacencia[numeroNodos++] = n;
+            String[] abece= {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+            if(n.getValor() < abece.length){
+                n.setLetra(abece[n.getValor()]);
+            } else {
+                n.setLetra(numeroNodos - abece.length + "");
+            }
         }
     }
 
@@ -325,6 +331,9 @@ public class Grafo {
                 List<Nodo> agendaTemp2 = new ArrayList<>();
                 for (Nodo n : agenda) {
                     if (agenda.indexOf(n) < beta) {
+                        if (listaVisitados.contains(nodoSalida)) { //Si ya encontro el destino
+                            return listaVisitados;
+                        }
                         listaVisitados.add(n);
                         agendaTemp2.add(n);
                     }
@@ -571,6 +580,12 @@ public class Grafo {
         }
     }
 
+    public void imprimirExamen(List<Nodo> lista) {
+        for (Nodo nodo : lista) {
+            System.out.print(nodo.getLetra() + ", ");
+        }
+    }
+    
     /**
      * Actualiza el nodo de inicio
      *
