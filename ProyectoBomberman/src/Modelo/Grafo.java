@@ -5,10 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Proyecto Sistemas Inteligentes I Clase Grafo
- *
+ * Proyecto Sistemas Inteligentes I
+ * Clase Grafo
  * @author Diego Alejandro Parra Medina
- * @author Juan Bernardo Henao Orozco Universidad de Caldas, 2023-1
+ * @author Juan Bernardo Henao Orozco
+ * Universidad de Caldas, 2023-1
  * @version 0.1
  */
 public class Grafo {
@@ -78,11 +79,14 @@ public class Grafo {
             Nodo n = new Nodo(id, estado, coordenadaX, coordenadaY);
             n.setValor(numeroNodos);
             tablaAdyacencia[numeroNodos++] = n;
-            String[] abece= {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
-            if(n.getValor() < abece.length){
-                n.setLetra(abece[n.getValor()]);
+            String[] abc= {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O",
+                "P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE",
+                "AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS",
+                "AT","AU","AV","AW","AX","AY","AZ"};
+            if(n.getValor() < abc.length){
+                n.setLetra(abc[n.getValor()]);
             } else {
-                n.setLetra(numeroNodos - abece.length + "");
+                n.setLetra(numeroNodos - abc.length + "");
             }
         }
     }
@@ -561,29 +565,12 @@ public class Grafo {
      * Método que imprime la solución
      *
      * @param lista lista de nodos visitados
-     * @param m tamaño m del grafo
      */
-    public void imprimirListaVisitados(List<Nodo> lista, int m) {
-        for (int i = 0; i < m; i++) {
-            for (Nodo nodo : this.getTablaAdyacencia()) {
-                if (nodo.getCoordenadaY() == i) {
-                    System.out.print("| ");
-                    if (lista.contains(nodo)) {
-                        int posicion = lista.indexOf(nodo);
-                        System.out.print(posicion + " ");
-                    } else {
-                        System.out.print("- ");
-                    }
-                }
-            }
-            System.out.println("|" + "\n");
-        }
-    }
-
-    public void imprimirExamen(List<Nodo> lista) {
+    public void imprimirRecorrido(List<Nodo> lista) {
         for (Nodo nodo : lista) {
             System.out.print(nodo.getLetra() + ", ");
         }
+        System.out.println("\n___________________________________________________________________________________");
     }
     
     /**
