@@ -573,6 +573,10 @@ public class Grafo {
         System.out.println("\n___________________________________________________________________________________");
     }
     
+    public Nodo getInicio() {
+        return inicio;
+    }
+    
     /**
      * Actualiza el nodo de inicio
      *
@@ -581,7 +585,7 @@ public class Grafo {
     public void setInicio(Nodo inicio) {
         this.inicio = inicio;
     }
-
+    
     /**
      * Actualiza el nodo de salida
      *
@@ -589,6 +593,10 @@ public class Grafo {
      */
     public void setSalida(Nodo salida) {
         this.salida = salida;
+    }
+    
+    public Nodo getSalida() {
+        return salida;
     }
 
     /**

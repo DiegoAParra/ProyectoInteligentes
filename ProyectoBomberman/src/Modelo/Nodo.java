@@ -106,6 +106,10 @@ public class Nodo {
     public int getCoordenadaY() {
         return coordenadaY;
     }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
     
     /**
      * Método toString para imprimir un nodo

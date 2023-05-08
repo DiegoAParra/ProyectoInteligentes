@@ -3,13 +3,10 @@ package Vista;
 import Modelo.Carga;
 import Modelo.Grafo;
 import Modelo.Nodo;
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import javax.swing.ImageIcon;
 
 /**
@@ -21,7 +18,7 @@ import javax.swing.ImageIcon;
  * de Caldas, 2023-1
  * @version 0.1
  */
-public class Principal extends javax.swing.JFrame{
+public class Principal extends javax.swing.JFrame {
 
     /**
      * Creates new form Principal
@@ -53,7 +50,6 @@ public class Principal extends javax.swing.JFrame{
         jButtonMetal = new javax.swing.JButton();
         jButtonBomberMan = new javax.swing.JButton();
         jButtonPuerta = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BOMBERMAN");
@@ -62,15 +58,15 @@ public class Principal extends javax.swing.JFrame{
         setLocation(new java.awt.Point(260, 20));
         setPreferredSize(new java.awt.Dimension(790, 665));
         setResizable(false);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jLabelAlgoritmo.setText("Algoritmo:");
 
         jComboBoxAlgoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Anchura", "Profundidad", "Costo Uniforme", "Beam Search", "Hill Climbing", "A Estrella" }));
-        jComboBoxAlgoritmo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxAlgoritmoActionPerformed(evt);
-            }
-        });
 
         jLabelHeuristica.setText("Heurística:");
 
@@ -142,43 +138,21 @@ public class Principal extends javax.swing.JFrame{
             }
         });
 
-        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanel1MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabelAlgoritmo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBoxAlgoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabelHeuristica)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBoxHeuristica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonConfirmaAlgoritmo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29)
+                .addComponent(jLabelAlgoritmo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBoxAlgoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jLabelHeuristica)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBoxHeuristica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonConfirmaAlgoritmo)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -218,15 +192,10 @@ public class Principal extends javax.swing.JFrame{
                     .addComponent(jButtonCargarMapa, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonNuevoMapa)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabelEditarMapa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonCamino))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(31, 31, 31)
+                .addComponent(jLabelEditarMapa)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonCamino)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonRocas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -248,13 +217,12 @@ public class Principal extends javax.swing.JFrame{
     private String inicio;
     private String salida;
     private List<Nodo> listaVisitados = new ArrayList<>();
-    private String seleccionado;
-    private int posXMouse;
-    private int posYMouse;
+    private String seleccionado = "";
     private ImageIcon imagenMetal = new ImageIcon(getClass().getResource("Imagenes/ImagenMetal.jpg"));
     private ImageIcon imagenRocas = new ImageIcon(getClass().getResource("Imagenes/ImagenRocas.jpg"));
     private ImageIcon imagenCamino = new ImageIcon(getClass().getResource("Imagenes/ImagenCamino.jpg"));
     private ImageIcon imagenBomberMan = new ImageIcon(getClass().getResource("Imagenes/ImagenBomberMan.jpg"));
+    private ImageIcon imagenPuerta = new ImageIcon(getClass().getResource("Imagenes/ImagenPuerta.jpg"));
 
     @Override
     public void paint(Graphics g) {
@@ -270,8 +238,14 @@ public class Principal extends javax.swing.JFrame{
                 } else if (nodo.getEstado().equals("R")) {
                     g.drawImage(imagenRocas.getImage(), (nodo.getCoordenadaX() * tamano) + 13, (nodo.getCoordenadaY() * tamano) + 81, tamano, tamano, this);
                 }
+                if(nodo == grafo.getInicio()){
+                    g.drawImage(imagenBomberMan.getImage(), (nodo.getCoordenadaX() * tamano) + 13, (nodo.getCoordenadaY() * tamano) + 81, tamano, tamano, this);
+                } else if(nodo == grafo.getSalida()){
+                    g.drawImage(imagenPuerta.getImage(), (nodo.getCoordenadaX() * tamano) + 13, (nodo.getCoordenadaY() * tamano) + 81, tamano, tamano, this);
+                }
                 if (!listaVisitados.isEmpty()) {
                     for (Nodo nodoVisitado : listaVisitados) {
+                        g.setColor(Color.WHITE);
                         g.drawString("" + listaVisitados.indexOf(nodoVisitado), (nodoVisitado.getCoordenadaX() * tamano) + 15, (nodoVisitado.getCoordenadaY() * tamano) + 93);
                     }
                 }
@@ -280,6 +254,8 @@ public class Principal extends javax.swing.JFrame{
     }
 
     private void jButtonCargarMapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCargarMapaActionPerformed
+        listaVisitados.clear();
+
         Carga carga = new Carga();
         grafo = carga.cargarTXT();
 
@@ -288,28 +264,6 @@ public class Principal extends javax.swing.JFrame{
         tamano = 570 / Math.max(n, m);
 
         repaint(); //Pinta el mapa
-
-        /*
-        //Pedimos el nodo inicio y salida del grafo
-        Scanner entradaEscaner = new Scanner(System.in);
-        String entradaInicio = ""; //id del nodo inicio
-        String entradaSalida = ""; //id del nodo salida
-
-        do {
-            System.out.println("Id del nodo inicio: ");
-            entradaInicio = entradaEscaner.nextLine(); //0,0
-        } while (grafo.numNodo(entradaInicio) < 0 && !"C".equals(grafo.getTablaAdyacencia()[grafo.numNodo(entradaInicio)].getEstado()));
-
-        do {
-            System.out.println("Id del nodo salida: "); //6,2
-            entradaSalida = entradaEscaner.nextLine();
-        } while (grafo.numNodo(entradaSalida) < 0 && !"C".equals(grafo.getTablaAdyacencia()[grafo.numNodo(entradaSalida)].getEstado()));
-         */
-        inicio = "0,0";
-        salida = "6,2";
-
-        grafo.setInicio(grafo.getTablaAdyacencia()[grafo.numNodo(inicio)]);
-        grafo.setSalida(grafo.getTablaAdyacencia()[grafo.numNodo(salida)]);
     }//GEN-LAST:event_jButtonCargarMapaActionPerformed
 
     private void jButtonNuevoMapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoMapaActionPerformed
@@ -318,15 +272,11 @@ public class Principal extends javax.swing.JFrame{
         repaint();
     }//GEN-LAST:event_jButtonNuevoMapaActionPerformed
 
-    private void jComboBoxAlgoritmoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxAlgoritmoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxAlgoritmoActionPerformed
-
     private void jButtonConfirmaAlgoritmoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmaAlgoritmoActionPerformed
         String algoritmo = jComboBoxAlgoritmo.getSelectedItem().toString();
         String heuristica = jComboBoxHeuristica.getSelectedItem().toString();
 
-        if (grafo != null) {
+        if (grafo != null && grafo.getInicio() != null && grafo.getSalida() != null) {
             if (algoritmo.equals("Anchura")) {
                 System.out.println("* * * Anchura * * *");
                 listaVisitados = grafo.anchura(grafo.getTablaAdyacencia()[grafo.numNodo(inicio)], grafo.getTablaAdyacencia()[grafo.numNodo(salida)]);
@@ -407,13 +357,43 @@ public class Principal extends javax.swing.JFrame{
         repaint();
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
-    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
-        PointerInfo pi = MouseInfo.getPointerInfo();
-        Point p = pi.getLocation();
-        posXMouse = (int) p.getX();
-        posYMouse = (int) p.getY();
-        System.out.println(posXMouse + " - " + posYMouse);
-    }//GEN-LAST:event_jPanel1MousePressed
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        int x = evt.getX();
+        int coorX = -1;
+        int y = evt.getY();
+        int coorY = -1;
+        if (grafo != null && x > 13 && x < 583 && y > 81 && y < 650) {
+            for (int i = 13; i < 583;) {
+                if (x > i) {
+                    coorX++;
+                }
+                i += tamano;
+            }
+            for (int j = 81; j < 650;) {
+                if (y > j) {
+                    coorY++;
+                }
+                j += tamano;
+            }
+            if(coorX < n && coorY < m){
+                Nodo n = grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)];
+                if(seleccionado.equals("Inicio")){
+                    grafo.setInicio(n);
+                    inicio = coorX + "," + coorY;
+                } else if(seleccionado.equals("Salida")){
+                    grafo.setSalida(n);
+                    salida = coorX + "," + coorY;
+                } else if(seleccionado.equals("C")){
+                    grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].setEstado("C");
+                } else if(seleccionado.equals("M")){
+                    grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].setEstado("M");
+                } else if(seleccionado.equals("R")){
+                    grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].setEstado("R");
+                }
+                repaint();
+            }
+        }
+    }//GEN-LAST:event_formMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBomberMan;
@@ -430,7 +410,6 @@ public class Principal extends javax.swing.JFrame{
     private javax.swing.JLabel jLabelAlgoritmo;
     private javax.swing.JLabel jLabelEditarMapa;
     private javax.swing.JLabel jLabelHeuristica;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
 }
