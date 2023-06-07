@@ -78,22 +78,6 @@ public class Carga {
                 String[] listaLinea = linea.split(",");
                 for (int i = 0; i < listaLinea.length; i++) {
                     grafo.nuevoNodo(coorX+","+coorY, listaLinea[i], coorX, coorY);
-                    
-                    //Conectar con los de arriba
-                    try{
-                        grafo.nuevaArista(coorX+","+coorY, coorX+","+(coorY-1));
-                        grafo.nuevaArista(coorX+","+(coorY-1), coorX+","+coorY);
-                    } catch(Exception e){
-                        //No imprimir nada, pero si salen excepciones
-                    }
-                    //Conectar con los de la izquierda
-                    try{                        
-                        grafo.nuevaArista((coorX-1)+","+coorY, coorX+","+coorY);
-                        grafo.nuevaArista(coorX+","+coorY, (coorX-1)+","+coorY);
-                    } catch(Exception e){
-                        //No imprimir nada, pero si salen excepciones
-                    }
-                    
                     coorX++;
                 }
                 coorX = 0;
@@ -102,7 +86,32 @@ public class Carga {
                 delimitar.useDelimiter("\n");
                 delimitar.close();
             }
-        return grafo;
+            for(int i = 0; i < calculoM(); i++){
+                for(int j = 0; j < calculoN(); j++){
+                    try {
+                        grafo.nuevaArista(i+","+j, i+","+(j+1)); //Abajo
+                    } catch (Exception e) {
+                        //No imprimir nada, pero si salen excepciones
+                    }
+                    try {
+                        grafo.nuevaArista(i+","+j, (i+1)+","+j); //Derecha
+                    } catch (Exception e) {
+                        //No imprimir nada, pero si salen excepciones
+                    }
+                    try {
+                        grafo.nuevaArista(i+","+j, i+","+(j-1)); //Arriba
+                    } catch (Exception e) {
+                        //No imprimir nada, pero si salen excepciones
+                    }
+                    try {
+                        grafo.nuevaArista(i+","+j, (i-1)+","+j); //Izquierda
+                    } catch (Exception e) {
+                        //No imprimir nada, pero si salen excepciones
+                    }
+                }
+            }
+            
+            return grafo;
         } catch (IOException e1) {
             System.out.println("El archivo no se encontró");
             return null;

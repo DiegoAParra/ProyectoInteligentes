@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  * Proyecto Sistemas Inteligentes I Clase Main Clase Principal de la interfaz
@@ -46,10 +47,14 @@ public class Principal extends javax.swing.JFrame {
         jButtonNuevoMapa = new javax.swing.JButton();
         jLabelEditarMapa = new javax.swing.JLabel();
         jButtonCamino = new javax.swing.JButton();
-        jButtonRocas = new javax.swing.JButton();
-        jButtonMetal = new javax.swing.JButton();
         jButtonBomberMan = new javax.swing.JButton();
+        jButtonMetal = new javax.swing.JButton();
+        jButtonFantasma = new javax.swing.JButton();
+        jButtonRocas = new javax.swing.JButton();
         jButtonPuerta = new javax.swing.JButton();
+        jButtonPuertaRocas = new javax.swing.JButton();
+        jButtonEliminarPuerta = new javax.swing.JButton();
+        jButtonSimular = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BOMBERMAN");
@@ -109,11 +114,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButtonRocas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/ImagenRocas.jpg"))); // NOI18N
-        jButtonRocas.setToolTipText("");
-        jButtonRocas.addActionListener(new java.awt.event.ActionListener() {
+        jButtonBomberMan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/ImagenBomberMan.jpg"))); // NOI18N
+        jButtonBomberMan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRocasActionPerformed(evt);
+                jButtonBomberManActionPerformed(evt);
             }
         });
 
@@ -124,10 +128,19 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButtonBomberMan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/ImagenBomberMan.jpg"))); // NOI18N
-        jButtonBomberMan.addActionListener(new java.awt.event.ActionListener() {
+        jButtonFantasma.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/ImagenFantasma.jpg"))); // NOI18N
+        jButtonFantasma.setToolTipText("");
+        jButtonFantasma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBomberManActionPerformed(evt);
+                jButtonFantasmaActionPerformed(evt);
+            }
+        });
+
+        jButtonRocas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/ImagenRocas.jpg"))); // NOI18N
+        jButtonRocas.setToolTipText("");
+        jButtonRocas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRocasActionPerformed(evt);
             }
         });
 
@@ -135,6 +148,27 @@ public class Principal extends javax.swing.JFrame {
         jButtonPuerta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonPuertaActionPerformed(evt);
+            }
+        });
+
+        jButtonPuertaRocas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/ImagenPuertaRocas.jpg"))); // NOI18N
+        jButtonPuertaRocas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPuertaRocasActionPerformed(evt);
+            }
+        });
+
+        jButtonEliminarPuerta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/Imagenes/ImagenEliminarPuerta.jpg"))); // NOI18N
+        jButtonEliminarPuerta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarPuertaActionPerformed(evt);
+            }
+        });
+
+        jButtonSimular.setText("Simular");
+        jButtonSimular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSimularActionPerformed(evt);
             }
         });
 
@@ -154,28 +188,38 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButtonConfirmaAlgoritmo)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelEditarMapa)
+                        .addGap(50, 50, 50))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jButtonLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonPuerta)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonEliminarPuerta))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonRocas)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonPuertaRocas))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonMetal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonFantasma))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonCamino)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonBomberMan))
                             .addComponent(jButtonCargarMapa, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                             .addComponent(jButtonNuevoMapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabelEditarMapa)
-                                .addGap(50, 50, 50))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButtonPuerta)
-                                    .addComponent(jButtonBomberMan)
-                                    .addComponent(jButtonRocas)
-                                    .addComponent(jButtonCamino)
-                                    .addComponent(jButtonMetal))
-                                .addGap(29, 29, 29))))))
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonSimular, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,17 +238,25 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jButtonNuevoMapa)
                 .addGap(31, 31, 31)
                 .addComponent(jLabelEditarMapa)
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonCamino)
+                    .addComponent(jButtonBomberMan))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonCamino)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonMetal)
+                    .addComponent(jButtonFantasma))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonRocas)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonRocas)
+                    .addComponent(jButtonPuertaRocas))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonMetal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonBomberMan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonPuerta)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonPuerta)
+                    .addComponent(jButtonEliminarPuerta))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonSimular)
+                .addContainerGap(310, Short.MAX_VALUE))
         );
 
         pack();
@@ -216,6 +268,7 @@ public class Principal extends javax.swing.JFrame {
     private int tamano;
     private String inicio;
     private String salida;
+    private List<String> listaFantasmas = new ArrayList<>();
     private List<Nodo> listaVisitados = new ArrayList<>();
     private String seleccionado = "";
     private ImageIcon imagenMetal = new ImageIcon(getClass().getResource("Imagenes/ImagenMetal.jpg"));
@@ -223,6 +276,8 @@ public class Principal extends javax.swing.JFrame {
     private ImageIcon imagenCamino = new ImageIcon(getClass().getResource("Imagenes/ImagenCamino.jpg"));
     private ImageIcon imagenBomberMan = new ImageIcon(getClass().getResource("Imagenes/ImagenBomberMan.jpg"));
     private ImageIcon imagenPuerta = new ImageIcon(getClass().getResource("Imagenes/ImagenPuerta.jpg"));
+    private ImageIcon imagenPuertaRocas = new ImageIcon(getClass().getResource("Imagenes/ImagenPuertaRocas.jpg"));
+    private ImageIcon imagenFantasma = new ImageIcon(getClass().getResource("Imagenes/ImagenFantasma.jpg"));
 
     @Override
     public void paint(Graphics g) {
@@ -238,11 +293,19 @@ public class Principal extends javax.swing.JFrame {
                 } else if (nodo.getEstado().equals("R")) {
                     g.drawImage(imagenRocas.getImage(), (nodo.getCoordenadaX() * tamano) + 13, (nodo.getCoordenadaY() * tamano) + 81, tamano, tamano, this);
                 }
-                if(nodo == grafo.getInicio()){
+
+                if (nodo == grafo.getInicio()) {
                     g.drawImage(imagenBomberMan.getImage(), (nodo.getCoordenadaX() * tamano) + 13, (nodo.getCoordenadaY() * tamano) + 81, tamano, tamano, this);
-                } else if(nodo == grafo.getSalida()){
-                    g.drawImage(imagenPuerta.getImage(), (nodo.getCoordenadaX() * tamano) + 13, (nodo.getCoordenadaY() * tamano) + 81, tamano, tamano, this);
+                } else if (nodo == grafo.getSalida()) {
+                    if (nodo.getEstado().equals("R")) {
+                        g.drawImage(imagenPuertaRocas.getImage(), (nodo.getCoordenadaX() * tamano) + 13, (nodo.getCoordenadaY() * tamano) + 81, tamano, tamano, this);
+                    } else {
+                        g.drawImage(imagenPuerta.getImage(), (nodo.getCoordenadaX() * tamano) + 13, (nodo.getCoordenadaY() * tamano) + 81, tamano, tamano, this);
+                    }
+                } else if (listaFantasmas.contains(nodo.getId())) {
+                    g.drawImage(imagenFantasma.getImage(), (nodo.getCoordenadaX() * tamano) + 13, (nodo.getCoordenadaY() * tamano) + 81, tamano, tamano, this);
                 }
+
                 if (!listaVisitados.isEmpty()) {
                     for (Nodo nodoVisitado : listaVisitados) {
                         g.setColor(Color.WHITE);
@@ -267,16 +330,62 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCargarMapaActionPerformed
 
     private void jButtonNuevoMapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoMapaActionPerformed
-        listaVisitados.clear();
-        grafo = null;
-        repaint();
+        //Interfaz grafica de nuevo mapa
+        String entradaX = JOptionPane.showInputDialog("Introduzca el tamaño en x:");
+        String entradaY = JOptionPane.showInputDialog("Introduzca el tamaño en y:");
+        try {
+            int x = Integer.parseInt(entradaX);
+            int y = Integer.parseInt(entradaY);
+            if (x > 0 && x < 25 && y > 0 && y < 25) {
+                grafo = new Grafo(x * y);
+                for (int i = 0; i < x; i++) {
+                    for (int j = 0; j < y; j++) {
+                        grafo.nuevoNodo(i + "," + j, "C", i, j);
+                    }
+                }
+                listaVisitados.clear();
+                n = x;
+                m = y;
+                tamano = 570 / Math.max(x, y);
+
+                for (int i = 0; i < y; i++) {
+                    for (int j = 0; j < x; j++) {
+                        try {
+                            grafo.nuevaArista(i + "," + j, i + "," + (j + 1)); //Abajo
+                        } catch (Exception e) {
+                            //No imprimir nada, pero si salen excepciones
+                        }
+                        try {
+                            grafo.nuevaArista(i + "," + j, (i + 1) + "," + j); //Derecha
+                        } catch (Exception e) {
+                            //No imprimir nada, pero si salen excepciones
+                        }
+                        try {
+                            grafo.nuevaArista(i + "," + j, i + "," + (j - 1)); //Arriba
+                        } catch (Exception e) {
+                            //No imprimir nada, pero si salen excepciones
+                        }
+                        try {
+                            grafo.nuevaArista(i + "," + j, (i - 1) + "," + j); //Izquierda
+                        } catch (Exception e) {
+                            //No imprimir nada, pero si salen excepciones
+                        }
+                    }
+                }
+                repaint();
+            } else {
+                System.out.println("Medidas no validas");
+            }
+        } catch (Exception e) {
+            System.out.println("Formato no valido");
+        }
     }//GEN-LAST:event_jButtonNuevoMapaActionPerformed
 
     private void jButtonConfirmaAlgoritmoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmaAlgoritmoActionPerformed
         String algoritmo = jComboBoxAlgoritmo.getSelectedItem().toString();
         String heuristica = jComboBoxHeuristica.getSelectedItem().toString();
 
-        if (grafo != null && grafo.getInicio() != null && grafo.getSalida() != null) {
+        if (grafo != null && grafo.getInicio() != null && grafo.getSalida() != null && listaFantasmas.isEmpty()) {
             if (algoritmo.equals("Anchura")) {
                 System.out.println("* * * Anchura * * *");
                 listaVisitados = grafo.anchura(grafo.getTablaAdyacencia()[grafo.numNodo(inicio)], grafo.getTablaAdyacencia()[grafo.numNodo(salida)]);
@@ -324,32 +433,22 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButtonCaminoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCaminoActionPerformed
         seleccionado = "C";
-        listaVisitados.clear();
-        repaint();
     }//GEN-LAST:event_jButtonCaminoActionPerformed
 
     private void jButtonRocasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRocasActionPerformed
         seleccionado = "R";
-        listaVisitados.clear();
-        repaint();
     }//GEN-LAST:event_jButtonRocasActionPerformed
 
     private void jButtonMetalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMetalActionPerformed
         seleccionado = "M";
-        listaVisitados.clear();
-        repaint();
     }//GEN-LAST:event_jButtonMetalActionPerformed
 
     private void jButtonBomberManActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBomberManActionPerformed
         seleccionado = "Inicio";
-        listaVisitados.clear();
-        repaint();
     }//GEN-LAST:event_jButtonBomberManActionPerformed
 
     private void jButtonPuertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPuertaActionPerformed
         seleccionado = "Salida";
-        listaVisitados.clear();
-        repaint();
     }//GEN-LAST:event_jButtonPuertaActionPerformed
 
     private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
@@ -358,6 +457,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        listaVisitados.clear();
+        repaint();
         int x = evt.getX();
         int coorX = -1;
         int y = evt.getY();
@@ -375,19 +476,65 @@ public class Principal extends javax.swing.JFrame {
                 }
                 j += tamano;
             }
-            if(coorX < n && coorY < m){
+            if (coorX < n && coorY < m) {
                 Nodo n = grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)];
-                if(seleccionado.equals("Inicio")){
+                String est = grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].getEstado();
+                if (seleccionado.equals("Inicio")) {
+                    grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].setEstado("C");
                     grafo.setInicio(n);
                     inicio = coorX + "," + coorY;
-                } else if(seleccionado.equals("Salida")){
+                } else if (seleccionado.equals("Salida")) {
+                    if (est.equals("R") || est.equals("C")) {
+                        grafo.setSalida(n);
+                        salida = coorX + "," + coorY;
+                    }
+                } else if (seleccionado.equals("Eliminar_salida")) {
+                    if (est.equals("R") || est.equals("C")) {
+                        grafo.setSalida(null);
+                        salida = "";
+                    }
+                } else if (seleccionado.equals("R_salida")) {
+                    grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].setEstado("R");
                     grafo.setSalida(n);
                     salida = coorX + "," + coorY;
-                } else if(seleccionado.equals("C")){
+                } else if (seleccionado.equals("Fantasma")) {
                     grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].setEstado("C");
-                } else if(seleccionado.equals("M")){
+                    listaFantasmas.add(coorX + "," + coorY);
+                } else if (seleccionado.equals("C")) {
+                    try {
+                        if (inicio.equals(coorX + "," + coorY)) {
+                            grafo.setInicio(null);
+                            inicio = "";
+                        } else if (listaFantasmas.contains(coorX + "," + coorY)) {
+                            listaFantasmas.remove(coorX + "," + coorY);
+                        }
+                    } catch (Exception e) { }
+                    grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].setEstado("C");
+                } else if (seleccionado.equals("M")) {
+                    try {
+                        if (inicio.equals(coorX + "," + coorY)) {
+                            grafo.setInicio(null);
+                            inicio = "";
+                        } else if (listaFantasmas.contains(coorX + "," + coorY)) {
+                            listaFantasmas.remove(coorX + "," + coorY);
+                        } else if (salida.equals(coorX + "," + coorY)) {
+                            grafo.setSalida(null);
+                            salida = "";
+                        }
+                    } catch (Exception e) { }
                     grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].setEstado("M");
-                } else if(seleccionado.equals("R")){
+                } else if (seleccionado.equals("R")) {
+                    try {
+                        if (inicio.equals(coorX + "," + coorY)) {
+                            grafo.setInicio(null);
+                            inicio = "";
+                        } else if (listaFantasmas.contains(coorX + "," + coorY)) {
+                            listaFantasmas.remove(coorX + "," + coorY);
+                        } else if (salida.equals(coorX + "," + coorY)) {
+                            grafo.setSalida(null);
+                            salida = "";
+                        }
+                    } catch (Exception e) { }
                     grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].setEstado("R");
                 }
                 repaint();
@@ -395,21 +542,40 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formMouseClicked
 
+    private void jButtonFantasmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFantasmaActionPerformed
+        seleccionado = "Fantasma";
+    }//GEN-LAST:event_jButtonFantasmaActionPerformed
+
+    private void jButtonPuertaRocasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPuertaRocasActionPerformed
+        seleccionado = "R_salida";
+    }//GEN-LAST:event_jButtonPuertaRocasActionPerformed
+
+    private void jButtonEliminarPuertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarPuertaActionPerformed
+        seleccionado = "Eliminar_salida";
+    }//GEN-LAST:event_jButtonEliminarPuertaActionPerformed
+
+    private void jButtonSimularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSimularActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSimularActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBomberMan;
     private javax.swing.JButton jButtonCamino;
     private javax.swing.JButton jButtonCargarMapa;
     private javax.swing.JButton jButtonConfirmaAlgoritmo;
+    private javax.swing.JButton jButtonEliminarPuerta;
+    private javax.swing.JButton jButtonFantasma;
     private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonMetal;
     private javax.swing.JButton jButtonNuevoMapa;
     private javax.swing.JButton jButtonPuerta;
+    private javax.swing.JButton jButtonPuertaRocas;
     private javax.swing.JButton jButtonRocas;
+    private javax.swing.JButton jButtonSimular;
     private javax.swing.JComboBox<String> jComboBoxAlgoritmo;
     private javax.swing.JComboBox<String> jComboBoxHeuristica;
     private javax.swing.JLabel jLabelAlgoritmo;
     private javax.swing.JLabel jLabelEditarMapa;
     private javax.swing.JLabel jLabelHeuristica;
     // End of variables declaration//GEN-END:variables
-
 }

@@ -13,7 +13,7 @@ import Vista.Principal;
 public class Main {
 
     public static void main(String[] args) {
-         //Interfaz grafica
+        //Interfaz grafica
         new Principal().setVisible(true);
     }
 }
