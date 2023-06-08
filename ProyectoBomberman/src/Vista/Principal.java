@@ -1,8 +1,14 @@
 package Vista;
 
+import Agentes.Bomberman;
+import Agentes.Fantasma;
 import Modelo.Carga;
 import Modelo.Grafo;
 import Modelo.Nodo;
+import jade.core.Agent;
+import jade.core.Profile;
+import jade.core.ProfileImpl;
+import jade.wrapper.AgentController;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -268,7 +274,10 @@ public class Principal extends javax.swing.JFrame {
     private int tamano;
     private String inicio;
     private String salida;
+    private int numeroComodines;
+    private int pd;
     private List<String> listaFantasmas = new ArrayList<>();
+    private List<String> listaComodines = new ArrayList<>();
     private List<Nodo> listaVisitados = new ArrayList<>();
     private String seleccionado = "";
     private ImageIcon imagenMetal = new ImageIcon(getClass().getResource("Imagenes/ImagenMetal.jpg"));
@@ -353,22 +362,18 @@ public class Principal extends javax.swing.JFrame {
                         try {
                             grafo.nuevaArista(i + "," + j, i + "," + (j + 1)); //Abajo
                         } catch (Exception e) {
-                            //No imprimir nada, pero si salen excepciones
                         }
                         try {
                             grafo.nuevaArista(i + "," + j, (i + 1) + "," + j); //Derecha
                         } catch (Exception e) {
-                            //No imprimir nada, pero si salen excepciones
                         }
                         try {
                             grafo.nuevaArista(i + "," + j, i + "," + (j - 1)); //Arriba
                         } catch (Exception e) {
-                            //No imprimir nada, pero si salen excepciones
                         }
                         try {
                             grafo.nuevaArista(i + "," + j, (i - 1) + "," + j); //Izquierda
                         } catch (Exception e) {
-                            //No imprimir nada, pero si salen excepciones
                         }
                     }
                 }
@@ -491,7 +496,7 @@ public class Principal extends javax.swing.JFrame {
                 } else if (seleccionado.equals("Eliminar_salida")) {
                     if (est.equals("R") || est.equals("C")) {
                         grafo.setSalida(null);
-                        salida = "";
+                        salida = null;
                     }
                 } else if (seleccionado.equals("R_salida")) {
                     grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].setEstado("R");
@@ -504,37 +509,40 @@ public class Principal extends javax.swing.JFrame {
                     try {
                         if (inicio.equals(coorX + "," + coorY)) {
                             grafo.setInicio(null);
-                            inicio = "";
+                            inicio = null;
                         } else if (listaFantasmas.contains(coorX + "," + coorY)) {
                             listaFantasmas.remove(coorX + "," + coorY);
                         }
-                    } catch (Exception e) { }
+                    } catch (Exception e) {
+                    }
                     grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].setEstado("C");
                 } else if (seleccionado.equals("M")) {
                     try {
                         if (inicio.equals(coorX + "," + coorY)) {
                             grafo.setInicio(null);
-                            inicio = "";
+                            inicio = null;
                         } else if (listaFantasmas.contains(coorX + "," + coorY)) {
                             listaFantasmas.remove(coorX + "," + coorY);
                         } else if (salida.equals(coorX + "," + coorY)) {
                             grafo.setSalida(null);
-                            salida = "";
+                            salida = null;
                         }
-                    } catch (Exception e) { }
+                    } catch (Exception e) {
+                    }
                     grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].setEstado("M");
                 } else if (seleccionado.equals("R")) {
                     try {
                         if (inicio.equals(coorX + "," + coorY)) {
                             grafo.setInicio(null);
-                            inicio = "";
+                            inicio = null;
                         } else if (listaFantasmas.contains(coorX + "," + coorY)) {
                             listaFantasmas.remove(coorX + "," + coorY);
                         } else if (salida.equals(coorX + "," + coorY)) {
                             grafo.setSalida(null);
-                            salida = "";
+                            salida = null;
                         }
-                    } catch (Exception e) { }
+                    } catch (Exception e) {
+                    }
                     grafo.getTablaAdyacencia()[grafo.numNodo(coorX + "," + coorY)].setEstado("R");
                 }
                 repaint();
@@ -555,9 +563,117 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEliminarPuertaActionPerformed
 
     private void jButtonSimularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSimularActionPerformed
-        // TODO add your handling code here:
+        if (grafo != null && grafo.getInicio() != null) {
+            numeroComodines = -1;
+            int x = (int) (Math.random() * n);
+            int y = (int) (Math.random() * m);
+            if (salida == null) {
+                while (!grafo.getTablaAdyacencia()[grafo.numNodo(x + "," + y)].getEstado().equals("R")) {
+                    x = (int) (Math.random() * n);
+                    y = (int) (Math.random() * m);
+                }
+                grafo.setSalida(grafo.getTablaAdyacencia()[grafo.numNodo(x + "," + y)]);
+                salida = x + "," + y;
+            }
+            while (numeroComodines < 0) {
+                try {
+                    numeroComodines = Integer.parseInt(JOptionPane.showInputDialog("Introduzca la cantidad de comodines:"));
+                } catch (Exception e) {
+                }
+            }
+            int cont = 0;
+            while (cont != numeroComodines) {
+                x = (int) (Math.random() * n);
+                y = (int) (Math.random() * m);
+                if (grafo.getTablaAdyacencia()[grafo.numNodo(x + "," + y)].getEstado().equals("R") && !listaComodines.contains(x + "," + y)) {
+                    listaComodines.add(x + "," + y);
+                    cont++;
+                }
+            }
+            pd = 1;
+
+            //JADE:
+            jade.core.Runtime runtime = jade.core.Runtime.instance();
+            Profile profile = new ProfileImpl();
+            jade.wrapper.AgentContainer container = runtime.createMainContainer(profile);
+            Agent agentBomberman = new Bomberman(this);
+            Agent agentFantasma = new Fantasma();
+            AgentController acBomberman;
+            AgentController acFantasma;
+            try {
+                acBomberman = container.acceptNewAgent("bomberman", agentBomberman);
+                acFantasma = container.acceptNewAgent("fantasma", agentFantasma);
+                acBomberman.start();
+                acFantasma.start();
+            } catch (Exception e) {
+            }
+            repaint();
+        } else {
+        }
     }//GEN-LAST:event_jButtonSimularActionPerformed
 
+    public Grafo getGrafo(){
+        return grafo;
+    }
+
+    public String getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(String inicio) {
+        this.inicio = inicio;
+    }
+
+    public String getSalida() {
+        return salida;
+    }
+
+    public void setSalida(String salida) {
+        this.salida = salida;
+    }
+
+    public int getNumeroComodines() {
+        return numeroComodines;
+    }
+
+    public void setNumeroComodines(int numeroComodines) {
+        this.numeroComodines = numeroComodines;
+    }
+
+    public int getPd() {
+        return pd;
+    }
+
+    public void setPd(int pd) {
+        this.pd = pd;
+    }
+
+    public List<String> getListaFantasmas() {
+        return listaFantasmas;
+    }
+
+    public void setListaFantasmas(List<String> listaFantasmas) {
+        this.listaFantasmas = listaFantasmas;
+    }
+
+    public List<String> getListaComodines() {
+        return listaComodines;
+    }
+
+    public void setListaComodines(List<String> listaComodines) {
+        this.listaComodines = listaComodines;
+    }
+
+    public List<Nodo> getListaVisitados() {
+        return listaVisitados;
+    }
+
+    public void setListaVisitados(List<Nodo> listaVisitados) {
+        this.listaVisitados = listaVisitados;
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBomberMan;
     private javax.swing.JButton jButtonCamino;
