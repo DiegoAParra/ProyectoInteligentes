@@ -8,19 +8,18 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- * Proyecto Sistemas Inteligentes I
- * Clase Carga
+ * Proyecto Sistemas Inteligentes I Clase Carga
+ *
  * @author Diego Alejandro Parra Medina
- * @author Juan Bernardo Henao Orozco
- * Universidad de Caldas, 2023-1
+ * @author Juan Bernardo Henao Orozco Universidad de Caldas, 2023-1
  * @version 0.1
  */
 public class Carga {
 
     static File fichero;
-            
+
     public Carga() {
-    
+
     }
 
     public Grafo cargarTXT() {
@@ -35,11 +34,11 @@ public class Carga {
         this.fichero = fc.getSelectedFile();
 
         int contador = 0; //contador para saber cuantos nodos tendra el grafo
-        
+
         try (FileReader fr = new FileReader(fichero)) {
             Scanner scanner;
             scanner = new Scanner(fr);
-            
+
             while (scanner.hasNextLine()) {
 
                 //aqui tenemos la linea del texto a leer Nodos
@@ -60,24 +59,40 @@ public class Carga {
             System.out.println("El archivo no puede contener letras");
             return null;
         }
-        
+
         Grafo grafo = new Grafo(contador);
-        
+
         try (FileReader fr = new FileReader(fichero)) {
             Scanner scanner;
             scanner = new Scanner(fr);
-            
-            
+
             int coorX = 0;
             int coorY = 0;
-            
+
             while (scanner.hasNextLine()) {
 
                 //Aqui tenemos la linea del texto a leer Nodos
                 String linea = scanner.nextLine();
                 String[] listaLinea = linea.split(",");
                 for (int i = 0; i < listaLinea.length; i++) {
-                    grafo.nuevoNodo(coorX+","+coorY, listaLinea[i], coorX, coorY);
+                    grafo.nuevoNodo(coorX + "," + coorY, listaLinea[i], coorX, coorY);
+                    /*
+                    //Conectar con los de arriba
+                    try{
+                        grafo.nuevaArista(coorX+","+coorY, coorX+","+(coorY-1));
+                        grafo.nuevaArista(coorX+","+(coorY-1), coorX+","+coorY);
+                    } catch(Exception e){
+                        //No imprimir nada, pero si salen excepciones
+                    }
+                    //Conectar con los de la izquierda
+                    try{                        
+                        grafo.nuevaArista((coorX-1)+","+coorY, coorX+","+coorY);
+                        grafo.nuevaArista(coorX+","+coorY, (coorX-1)+","+coorY);
+                    } catch(Exception e){
+                        //No imprimir nada, pero si salen excepciones
+                    }
+                    */
+                    
                     coorX++;
                 }
                 coorX = 0;
@@ -86,31 +101,29 @@ public class Carga {
                 delimitar.useDelimiter("\n");
                 delimitar.close();
             }
-            for(int i = 0; i < calculoM(); i++){
-                for(int j = 0; j < calculoN(); j++){
+
+            
+            for (int i = 0; i < calculoN(); i++) {
+                for (int j = 0; j < calculoM(); j++) {
                     try {
-                        grafo.nuevaArista(i+","+j, i+","+(j+1)); //Abajo
-                    } catch (Exception e) {
-                        //No imprimir nada, pero si salen excepciones
-                    }
-                    try {
-                        grafo.nuevaArista(i+","+j, (i+1)+","+j); //Derecha
-                    } catch (Exception e) {
-                        //No imprimir nada, pero si salen excepciones
-                    }
-                    try {
-                        grafo.nuevaArista(i+","+j, i+","+(j-1)); //Arriba
-                    } catch (Exception e) {
-                        //No imprimir nada, pero si salen excepciones
-                    }
-                    try {
-                        grafo.nuevaArista(i+","+j, (i-1)+","+j); //Izquierda
-                    } catch (Exception e) {
-                        //No imprimir nada, pero si salen excepciones
-                    }
+                            grafo.nuevaArista(i + "," + j, i + "," + (j + 1)); //Abajo
+                        } catch (Exception e) {
+                        }
+                        try {
+                            grafo.nuevaArista(i + "," + j, (i + 1) + "," + j); //Derecha
+                        } catch (Exception e) {
+                        }
+                        try {
+                            grafo.nuevaArista(i + "," + j, i + "," + (j - 1)); //Arriba
+                        } catch (Exception e) {
+                        }
+                        try {
+                            grafo.nuevaArista(i + "," + j, (i - 1) + "," + j); //Izquierda
+                        } catch (Exception e) {
+                        }
                 }
             }
-            
+
             return grafo;
         } catch (IOException e1) {
             System.out.println("El archivo no se encontró");
@@ -120,13 +133,13 @@ public class Carga {
             return null;
         }
     }
-    
-    public int calculoN(){
+
+    public int calculoN() {
         int n = 0; //contador para saber cuantos nodos en n tendra el grafo
         try (FileReader fr = new FileReader(fichero)) {
             Scanner scanner;
             scanner = new Scanner(fr);
-            
+
             while (scanner.hasNextLine()) {
 
                 //aqui tenemos la linea del texto a leer Nodos
@@ -137,7 +150,7 @@ public class Carga {
                 }
                 return n;
             }
-        return n;
+            return n;
         } catch (IOException e1) {
             System.out.println("El archivo no se encontró");
             return 0;
@@ -146,13 +159,13 @@ public class Carga {
             return 0;
         }
     }
-    
-    public int calculoM(){
+
+    public int calculoM() {
         int m = 0; //contador para saber cuantos nodos en m tendra el grafo
         try (FileReader fr = new FileReader(fichero)) {
             Scanner scanner;
             scanner = new Scanner(fr);
-            
+
             while (scanner.hasNextLine()) {
                 //aqui tenemos la linea del texto a leer Nodos
                 String linea = scanner.nextLine();
@@ -161,7 +174,7 @@ public class Carga {
                 delimitar.close();
                 m++;
             }
-        return m;
+            return m;
         } catch (IOException e1) {
             System.out.println("El archivo no se encontró");
             return 0;

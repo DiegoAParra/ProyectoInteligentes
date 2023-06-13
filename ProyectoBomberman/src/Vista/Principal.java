@@ -316,6 +316,13 @@ public class Principal extends javax.swing.JFrame {
                 }
 
                 if (!listaVisitados.isEmpty()) {
+                    //Sustentacion: invertir lista visitados
+                    /*
+                    List<Nodo> temp = new ArrayList<>();
+                    for(int i = listaVisitados.size()-1; i >= 0; i--){
+                        temp.add(listaVisitados.get(i));
+                    }
+                    */
                     for (Nodo nodoVisitado : listaVisitados) {
                         g.setColor(Color.WHITE);
                         g.drawString("" + listaVisitados.indexOf(nodoVisitado), (nodoVisitado.getCoordenadaX() * tamano) + 15, (nodoVisitado.getCoordenadaY() * tamano) + 93);
@@ -389,7 +396,7 @@ public class Principal extends javax.swing.JFrame {
     private void jButtonConfirmaAlgoritmoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmaAlgoritmoActionPerformed
         String algoritmo = jComboBoxAlgoritmo.getSelectedItem().toString();
         String heuristica = jComboBoxHeuristica.getSelectedItem().toString();
-
+        listaVisitados.clear();
         if (grafo != null && grafo.getInicio() != null && grafo.getSalida() != null && listaFantasmas.isEmpty()) {
             if (algoritmo.equals("Anchura")) {
                 System.out.println("* * * Anchura * * *");
